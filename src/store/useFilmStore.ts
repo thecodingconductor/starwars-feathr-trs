@@ -9,5 +9,9 @@ export const useFilmStore = create<FilmStore>((set, get) => ({
     filteredFilms: () => {
         const { films, query } = get();
         return films.filter(film => film.title.toLowerCase().includes(query.toLowerCase()))
-    } 
+    },
+    getFilmById: (id) => {
+        const {films} = get();
+        return films.find((f) => f.episode_id === Number(id))
+    }
 }))

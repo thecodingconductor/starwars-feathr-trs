@@ -25,13 +25,14 @@ export interface FilmResponse {
   results: Film[]
 }
 
-
+// Zustand FilmStore Type.
 export type FilmStore = {
   films: Film[];
   query: string;
   filteredFilms: () => Film[];
   setFilms: (films: Film[]) => void;
   setQuery: (q: string) => void;
+  getFilmById: (id: string | number) => Film | undefined;
 };
 
 export interface Person {
