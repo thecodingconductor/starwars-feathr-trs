@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import { Suspense } from 'react'
 import { ThemeProvider } from 'styled-components';
 import { useState } from 'react';
 import { lightTheme, darkTheme } from './theme/theme';
@@ -14,9 +15,11 @@ function App() {
 
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <Routes>
-        <Route path="/" element={<Home />}/>
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Home />}/>
+        </Routes>
+      </Suspense>
     </ThemeProvider>
    
   )

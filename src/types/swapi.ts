@@ -25,6 +25,15 @@ export interface FilmResponse {
   results: Film[]
 }
 
+
+export type FilmStore = {
+  films: Film[];
+  query: string;
+  filteredFilms: () => Film[];
+  setFilms: (films: Film[]) => void;
+  setQuery: (q: string) => void;
+};
+
 export interface Person {
   name: string;
   height: string;
