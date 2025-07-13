@@ -6,10 +6,7 @@ import { Link } from 'react-router-dom'
 
 const Home = () => {
 
-  const { films, setFilms, query, setQuery, filteredFilms } = useFilmStore();
-
-
-   
+  const { setFilms, query, setQuery, filteredFilms } = useFilmStore();
 
   useEffect(() => {
     // Fetch Films on Page Load -> Load into Zustand State.

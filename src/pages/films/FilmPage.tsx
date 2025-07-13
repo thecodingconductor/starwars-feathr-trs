@@ -11,6 +11,7 @@ const FilmPage = () => {
         id ? getFilmById(id) || null : null)
 
     useEffect(() => {
+        // Only fetch from API if film not present in Zustand 
        if (!film && id)  {
         axios.get(`https://swapi.info/api/films/${id}`).then(res => {setFilm(res.data)})
        }

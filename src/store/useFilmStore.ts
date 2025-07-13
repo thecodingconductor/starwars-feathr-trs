@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { Film, FilmStore } from '../types/swapi'
+import type { FilmStore } from '../types/swapi'
 
 export const useFilmStore = create<FilmStore>((set, get) => ({
     films: [],
@@ -8,7 +8,9 @@ export const useFilmStore = create<FilmStore>((set, get) => ({
     setQuery: (q) => set({query: q}),
     filteredFilms: () => {
         const { films, query } = get();
-        return films.filter(film => film.title.toLowerCase().includes(query.toLowerCase()))
+        return films.filter(film => 
+            film.title.toLowerCase().includes(query.toLowerCase()))
+            .sort((a, b) => a.episode_id - b.episode_id)
     },
     getFilmById: (id) => {
         const {films} = get();
