@@ -1,16 +1,19 @@
 import { useEffect } from "react"
-import { fetchFilms } from "../api/swapi"
+import { fetchFilms, fetchPeople } from "../api/swapi"
 import { useFilmStore } from "../store/useFilmStore";
+import { usePersonStore } from '../store/usePersonStore'
 import { Link } from 'react-router-dom'
+import { extractIdFromUrl } from "../utils/extractId";
 
 
 const Home = () => {
 
-  const { setFilms, query, setQuery, filteredFilms } = useFilmStore();
+ 
+  const { setPeople, query, setQuery, filteredPeople } = usePersonStore();
 
   useEffect(() => {
-    // Fetch Films on Page Load -> Load into Zustand State.
-    fetchFilms().then(setFilms)
+    // Fetch People on Page Load -> Load into Zustand State.
+    fetchPeople().then(setPeople)
   }, []);
 
 
@@ -18,13 +21,13 @@ const Home = () => {
   
   return (
     <main style={{ padding: '2rem' }}>
-      <h1>Star Wars Explorer Films</h1>
+      <h1>Star Wars Explorer People</h1>
       <input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Use the force..."/>
       <ul>
-        {filteredFilms().map(film => (    
-            <li key={film.episode_id}>
-                <Link to={`/films/${film.episode_id}`}>
-                    {film.title}
+        {filteredPeople().map(person => (    
+            <li key={person.name}>
+                <Link to={`/people/${extractIdFromUrl(person.url)}`}>
+                    {person.name}
                 </Link>  
             </li>     
         ))}

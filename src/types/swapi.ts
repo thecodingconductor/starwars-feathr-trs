@@ -54,6 +54,16 @@ export interface Person {
   url: string;
 }
 
+export type PersonStore = {
+  people: Person[];
+  query: string;
+  setPeople: (people: Person[]) => void;
+  setQuery: (q: string) => void;
+  filteredPeople: () => Person[];
+  getPersonById: (id: string | number) => Person | undefined;
+};
+
+
 export interface Planet {
   name: string;
   rotation_period: string;
