@@ -7,13 +7,22 @@ import { usePersonStore } from '../../store/usePersonStore'
 
 const PersonPage = () => {
   const { id } = useParams<{id: string}>();
-  const getPersonById = usePersonStore((state) => state.getPersonById)
-  const [person, setPerson] = useState<Person | null>(() => 
-  id ? getPersonById(id) || null : null);
+
+  const getPersonById = usePersonStore((state) => state.getById)
+  const [person, setPerson] = useState<Person | null>(null);
 
   useEffect(() => {
-    if (!person && id) {
-      axios.get(`https://swapi.info/api/people/${id}`).then(res => {setPerson(res.data)})
+
+    if (!id) return;
+
+    const localPerson = getPersonById(id);
+
+    if(localPerson) {
+      setPerson(localPerson)
+    } else {
+      axios.get(`https://swapi.info/api/people/${id}`)
+        .then(res => {setPerson(res.data)})
+        .catch((err) => console.error('Failed to fetch person', err))
     }
   }, [person, id])
 

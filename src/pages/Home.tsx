@@ -11,7 +11,7 @@ const Home = () => {
 
  const data = usePersonStore((s) => s.data);
  const query = usePersonStore((s) => s.query);
- const setPeople = usePersonStore((s) => s.setData)
+ const setPeople = usePersonStore((s) => s.setData);
 
  const people = filterAndSort(data, query, 'name');
 
