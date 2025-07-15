@@ -3,28 +3,75 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import type { Person } from '../../types/swapi'
 import { usePersonStore } from '../../store/usePersonStore'
+import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter'
 
 
 const PersonPage = () => {
   const { id } = useParams<{id: string}>();
 
-  const getPersonById = usePersonStore((state) => state.getById)
   const [person, setPerson] = useState<Person | null>(null);
+
+  const [homeworldName, setHomeworldName] = useState<string | null>(null)
+  const [speciesName, setSpeciesName] = useState<string[]>([])
+  // TODO: Get Image?
+  // const [image, setImage] = useState<string | null>(null)
+
 
   useEffect(() => {
 
-    if (!id) return;
+    // Fetch Person by ID 
+    const fetchPerson = async () => {
+      if(!id || person) return
 
-    const localPerson = getPersonById(id);
-
-    if(localPerson) {
-      setPerson(localPerson)
-    } else {
-      axios.get(`https://swapi.info/api/people/${id}`)
-        .then(res => {setPerson(res.data)})
-        .catch((err) => console.error('Failed to fetch person', err))
+      try {
+        const res = await axios.get(`https://swapi.info/api/people/${id}`)
+        setPerson(res.data)
+      } catch (error) {
+        console.error('Failed to fetch person:', error)
+      }
     }
+    
+    fetchPerson()
   }, [person, id])
+
+  useEffect(() => {
+
+    // Fetch related data by Homeworld and Species URLs. 
+
+    const fetchRelated = async () => {
+
+      if(!person) return;
+
+      try {
+        if (person.homeworld) {
+          const res = await axios.get(person.homeworld)
+          setHomeworldName(res.data.name)
+        }
+
+        if (person.species && person.species.length > 0) {
+          const names = await Promise.all(
+            person.species.map(async (url) => {
+              try {
+                const res = await axios.get(url)
+                return res.data.name
+              } catch (error) {
+                return 'Unknown'
+              }
+            })
+          )
+
+          setSpeciesName(names)
+        } else {
+          setSpeciesName(["Human"])
+        }
+      } catch (error) {
+        console.error('Failed to fetch related data:', error)
+      }
+    }
+
+    fetchRelated();
+
+  }, [person])
 
   if (!person) return <p>Loading person data...</p>
 
@@ -33,13 +80,14 @@ const PersonPage = () => {
       <h1>{person.name}</h1>
       <ul>
         <li><strong>Birth Year:</strong> {person.birth_year}</li>
-        <li><strong>Gender:</strong> {person.gender}</li>
+        <li><strong>Gender:</strong> {capitalizeFirstLetter(person.gender)}</li>
         <li><strong>Height:</strong> {person.height} cm</li>
         <li><strong>Mass:</strong> {person.mass} kg</li>
-        <li><strong>Hair Color:</strong> {person.hair_color}</li>
+        {/* TODO: capitlize comma separated values */}
+        <li><strong>Hair Color:</strong> {capitalizeFirstLetter(person.hair_color)}</li>
         <li><strong>Eye Color:</strong> {person.eye_color}</li>
-        <li><strong>Homeworld:</strong> {person.homeworld}</li> 
-        <li><strong>Species:</strong> {person.species.join(', ')}</li> 
+        <li><strong>Homeworld:</strong> {homeworldName || 'Loading...'}</li> 
+        <li><strong>Species:</strong> {speciesName.join(', ')}</li> 
       </ul>
     </div>
   )
