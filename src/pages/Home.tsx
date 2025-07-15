@@ -4,12 +4,16 @@ import { useFilmStore } from "../store/useFilmStore";
 import { usePersonStore } from '../store/usePersonStore'
 import { Link } from 'react-router-dom'
 import { extractIdFromUrl } from "../utils/extractId";
+import { filterAndSort } from "../utils/filterAndSort";
 
 
 const Home = () => {
 
- 
-  const { setPeople, query, setQuery, filteredPeople } = usePersonStore();
+ const data = usePersonStore((s) => s.data);
+ const query = usePersonStore((s) => s.query);
+ const setPeople = usePersonStore((s) => s.setData)
+
+ const people = filterAndSort(data, query, 'name');
 
   useEffect(() => {
     // Fetch People on Page Load -> Load into Zustand State.
@@ -22,15 +26,13 @@ const Home = () => {
   return (
     <main style={{ padding: '2rem' }}>
       <h1>Star Wars Explorer People</h1>
-      <input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Use the force..."/>
+      {/* <input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Use the force..."/> */}
       <ul>
-        {filteredPeople().map(person => (    
-            <li key={person.name}>
-                <Link to={`/people/${extractIdFromUrl(person.url)}`}>
-                    {person.name}
-                </Link>  
-            </li>     
-        ))}
+       {people.map((person) => (
+        <Link key={person.url} to={`/people/${person.url.split('/').at(-1)}`}>
+          <div>{person.name}</div>
+        </Link>
+      ))}
       </ul>
     </main>
   )
