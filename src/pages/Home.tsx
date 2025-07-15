@@ -1,9 +1,7 @@
 import { useEffect } from "react"
-import { fetchFilms, fetchPeople } from "../api/swapi"
-import { useFilmStore } from "../store/useFilmStore";
+import { fetchPeople } from "../api/swapi"
 import { usePersonStore } from '../store/usePersonStore'
 import { Link } from 'react-router-dom'
-import { extractIdFromUrl } from "../utils/extractId";
 import { filterAndSort } from "../utils/filterAndSort";
 
 
@@ -20,6 +18,7 @@ const Home = () => {
     // Fetch People on Page Load -> Load into Zustand State.
     fetchPeople().then(setPeople)
   }, []);
+
 
 
   

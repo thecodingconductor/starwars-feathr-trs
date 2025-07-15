@@ -2,16 +2,22 @@ import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import type { Person } from '../../types/swapi'
-import { usePersonStore } from '../../store/usePersonStore'
 import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter'
+import { extractIdFromUrl } from '../../utils/extractId'
+import { Link } from 'react-router-dom'
+import { fetchPerson } from '../../api/swapi'
 
+type HomeWorldObj = {
+  name: string;
+  id: number
+}
 
 const PersonPage = () => {
   const { id } = useParams<{id: string}>();
 
   const [person, setPerson] = useState<Person | null>(null);
 
-  const [homeworldName, setHomeworldName] = useState<string | null>(null)
+  const [homeworldName, setHomeworldName] = useState<HomeWorldObj | null>(null)
   const [speciesName, setSpeciesName] = useState<string[]>([])
   // TODO: Get Image?
   // const [image, setImage] = useState<string | null>(null)
@@ -45,7 +51,12 @@ const PersonPage = () => {
       try {
         if (person.homeworld) {
           const res = await axios.get(person.homeworld)
-          setHomeworldName(res.data.name)
+          setHomeworldName({
+            name: res.data.name,
+            id: Number(extractIdFromUrl(res.data.url))
+          })
+
+         
         }
 
         if (person.species && person.species.length > 0) {
@@ -86,7 +97,14 @@ const PersonPage = () => {
         {/* TODO: capitlize comma separated values */}
         <li><strong>Hair Color:</strong> {capitalizeFirstLetter(person.hair_color)}</li>
         <li><strong>Eye Color:</strong> {person.eye_color}</li>
-        <li><strong>Homeworld:</strong> {homeworldName || 'Loading...'}</li> 
+        <li>
+          <Link to={`/planets/${homeworldName?.id}`}>
+
+               <strong>Homeworld:</strong> 
+               {homeworldName?.name || 'Loading...'}
+          </Link>
+       
+        </li> 
         <li><strong>Species:</strong> {speciesName.join(', ')}</li> 
       </ul>
     </div>

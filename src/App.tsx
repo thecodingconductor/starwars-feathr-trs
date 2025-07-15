@@ -7,6 +7,7 @@ import { lightTheme, darkTheme } from './theme/theme';
 import Home from './pages/Home'
 import FilmPage from './pages/films/FilmPage'
 import PersonPage from './pages/people/PersonPage'
+import PlanetPage from './pages/planets/PlanetPage';
 import './App.css'
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<Home />}/>
           <Route path={'/people/:id'} element={<PersonPage />}/>
           <Route path={'/films/:id'} element={<FilmPage />}/>
+          <Route path={'/planets/:id'} element={<PlanetPage />}/>
         </Routes>
       </Suspense>
     </ThemeProvider>
