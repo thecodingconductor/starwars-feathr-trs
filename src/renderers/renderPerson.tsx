@@ -7,6 +7,7 @@ import { extractIdFromUrl } from '../utils/extractId'
 type RelatedData = {
   homeworld?: { name: string; id: string }
   species?: { name: string; id: string }[]
+  starships?: {name: string, id: string}[]
 }
 
 export const renderPerson = (
@@ -36,6 +37,23 @@ return (
                 </span>
               ))
             : "Unknown"}
+        </li>
+        <li>
+          
+              <strong>Starships: </strong>{" "}
+              {Array.isArray(related.starships)
+                ? related.starships.map((s, i) => (
+                  <Link to={`/starships/${s.id}`}>
+                     <span key={s.id}>
+                      {i > 0 && ", "}
+                      {s.name}
+                    </span>
+                  </Link>
+                   
+                  ))
+                : "Unknown"}
+          
+          
         </li>
     </ul>
   </div>

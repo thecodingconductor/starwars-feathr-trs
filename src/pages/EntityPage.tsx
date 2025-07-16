@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import React, { type JSX } from 'react'
+import { type JSX } from 'react'
 import { useEffect, useState } from 'react'
 
 interface EntityPageProps<T> {
@@ -41,6 +41,7 @@ function EntityPage<T>({ fetchEntity, getById, extractRelated, render }: EntityP
       }
       setLoading(false)
     }
+    
     load()
   }, [id])
 

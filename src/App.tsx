@@ -9,7 +9,7 @@ import FilmPage from './pages/films/FilmPage'
 import PersonPage from './pages/people/PersonPage'
 import './App.css'
 import PlanetPage from './pages/planets/PlanetPage';
-
+import StarshipPage from './pages/starships/StarshipPage';
 
 function App() {
 
@@ -28,6 +28,7 @@ function App() {
 
           <Route path={'/films/:id'} element={<FilmPage />}/>
           <Route path={'/planets/:id'} element={<PlanetPage />}/>
+           <Route path={'/starships/:id'} element={<StarshipPage />}/>
         </Routes>
       </Suspense>
     </ThemeProvider>

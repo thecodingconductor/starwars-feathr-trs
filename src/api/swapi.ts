@@ -1,5 +1,7 @@
-import type { Film, Person, Planet } from "../types/swapi"
+import type { Film, Person, Planet, Starship } from "../types/swapi"
 import axios from 'axios'
+
+// Simple API functions
 
 export const fetchFilms = async (): Promise<Film[]> => {
     const { data } = await axios.get('https://swapi.info/api/films')
@@ -25,5 +27,10 @@ export const fetchPlanets = async (): Promise<Planet[]> => {
 
 export const fetchPlanet = async (id: string): Promise<Planet> => {
     const { data } = await axios.get(`https://swapi.info/api/planets/${id}`)
+    return data
+}
+
+export const fetchStarship = async (id: string): Promise<Starship> => {
+    const { data } = await axios.get(`https://swapi.info/api/starships/${id}`);
     return data
 }

@@ -6,6 +6,7 @@ export const extractRelatedPersonData = async (person: Person) => {
       const result: Record<string, any> = {}
 
       try {
+        // Homeworld
         if (person.homeworld) {
           const res = await fetch(person.homeworld)
           const data = await res.json();
@@ -16,6 +17,7 @@ export const extractRelatedPersonData = async (person: Person) => {
             id: extractIdFromUrl(person.homeworld)
           }
         }
+        // Species
         if (person.species?.length > 0) {
           const speciesNames = await Promise.all(
             person.species.map(async (url: string) => {
@@ -34,6 +36,25 @@ export const extractRelatedPersonData = async (person: Person) => {
           result.species = [{ name: "Human", id: "1" }]
 
         }
+
+        // Starships
+        if(person.starships.length > 0) {
+          const starships = await Promise.all(
+            person.starships.map(async (url: string) => {
+              const res = await fetch(url)
+              const data = await res.json()
+
+              return {
+                name: data.name,
+                url,
+                id: extractIdFromUrl(url)
+              }
+            })
+          )
+
+          result.starships = starships
+        }
+        // TODO: add else block as above
       } catch (err) {
         console.error(err)
       }
