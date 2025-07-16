@@ -38,6 +38,7 @@ export const extractRelatedStarshipData = async (starship: Starship) => {
         })
       )
       result.pilots = pilotData.filter(Boolean) as RelatedItem[]
+      console.log(result.pilots)
     }
 
     if (starship.films?.length) {

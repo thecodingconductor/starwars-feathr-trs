@@ -43,8 +43,8 @@ return (
               <strong>Starships: </strong>{" "}
               {Array.isArray(related.starships)
                 ? related.starships.map((s, i) => (
-                  <Link to={`/starships/${s.id}`}>
-                     <span key={s.id}>
+                  <Link key={s.id} to={`/starships/${s.id}`}>
+                     <span >
                       {i > 0 && ", "}
                       {s.name}
                     </span>
