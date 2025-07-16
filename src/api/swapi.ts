@@ -12,13 +12,18 @@ export const fetchPeople = async (): Promise<Person[]> => {
     return data
 }
 
+export const fetchPerson = async (id: string): Promise<Person> => {
+    const { data } = await axios.get(`https://swapi.info/api/people/${id}`);
+    return data
+
+}
+
 export const fetchPlanets = async (): Promise<Planet[]> => {
     const { data } = await axios.get('https://swapi.info/api/planets')
     return data
 }
 
-export const fetchPerson = async (id: number): Promise<Person> => {
-    const { data } = await axios.get(`https://swapi.info/api/people/${id}`);
+export const fetchPlanet = async (id: string): Promise<Planet> => {
+    const { data } = await axios.get(`https://swapi.info/api/planets/${id}`)
     return data
-
 }

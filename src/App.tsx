@@ -7,8 +7,9 @@ import { lightTheme, darkTheme } from './theme/theme';
 import Home from './pages/Home'
 import FilmPage from './pages/films/FilmPage'
 import PersonPage from './pages/people/PersonPage'
-import PlanetPage from './pages/planets/PlanetPage';
 import './App.css'
+import PlanetPage from './pages/planets/PlanetPage';
+
 
 function App() {
 
@@ -21,7 +22,10 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<Home />}/>
-          <Route path={'/people/:id'} element={<PersonPage />}/>
+
+          <Route path={'/people/:id'} element={<PersonPage />} />
+          
+
           <Route path={'/films/:id'} element={<FilmPage />}/>
           <Route path={'/planets/:id'} element={<PlanetPage />}/>
         </Routes>
