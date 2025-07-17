@@ -37,6 +37,7 @@ export type FilmStore = {
 
 export interface Person {
   name: string;
+  image: string;
   height: string;
   mass: string;
   hair_color: string;
