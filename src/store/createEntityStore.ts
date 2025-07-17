@@ -13,6 +13,7 @@ interface EntityStore<T extends EntityWithUrl>{
     setQuery: (q: string) => void;
     filtered: () => T[];
     getById: (id: string | number) => T | undefined;
+    reset: () => void;
 }
 
 export function createEntityStore<T extends EntityWithUrl>(sortKey: keyof T) {
@@ -52,7 +53,8 @@ export function createEntityStore<T extends EntityWithUrl>(sortKey: keyof T) {
             return get().data.find(
                 (item) => extractIdFromUrl(item.url) === String(id)
             )
-        }
+        },
+        reset: () => set({query: '', data: []}),
 
     }))
 }

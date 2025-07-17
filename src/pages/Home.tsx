@@ -73,6 +73,8 @@ const Home = () => {
 
   useEffect(() => {
     // Fetch People on Page Load -> Load into Zustand State.
+    // call Zustand reset to remvoe query/
+    usePersonStore.getState().reset();
     fetchPeople().then(setPeople)
   }, []);
 
