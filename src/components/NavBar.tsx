@@ -24,7 +24,6 @@ const NavBar = () => {
   return (
     <Nav>
       <StyledLink to="/">Home</StyledLink>
-      <StyledLink to="/people">People</StyledLink>
       <StyledLink to="/planets">Planets</StyledLink>
       <StyledLink to="/starships">Starships</StyledLink>
     </Nav>

@@ -30,6 +30,11 @@ export const fetchPlanet = async (id: string): Promise<Planet> => {
     return data
 }
 
+export const fetchStarships = async (): Promise<Starship[]> => {
+    const { data } = await axios.get(`https://swapi.info/api/starships`)
+    return data
+}
+
 export const fetchStarship = async (id: string): Promise<Starship> => {
     const { data } = await axios.get(`https://swapi.info/api/starships/${id}`);
     return data
