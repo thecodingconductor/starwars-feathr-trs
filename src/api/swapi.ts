@@ -41,6 +41,7 @@ export const fetchPerson = async (id: string): Promise<Person> => {
 
 export const fetchPlanets = async (): Promise<Planet[]> => {
     const { data } = await axios.get('https://swapi.info/api/planets')
+    console.log(data)
     return data
 }
 
@@ -51,6 +52,7 @@ export const fetchPlanet = async (id: string): Promise<Planet> => {
 
 export const fetchStarships = async (): Promise<Starship[]> => {
     const { data } = await axios.get(`https://swapi.info/api/starships`)
+   
     return data
 }
 
