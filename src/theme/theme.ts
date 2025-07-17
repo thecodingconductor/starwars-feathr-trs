@@ -1,13 +1,17 @@
-export const lightTheme = {
-  background: '#fff',
-  text: '#000',
-  primary: '#0070f3',
-};
+import type { Theme } from './types'
 
-export const darkTheme = {
-  background: '#121212',
-  text: '#fff',
-  primary: '#1EA7FD',
-};
+export const lightTheme: Theme = {
+  background: '#f0f0f0',
+  text: '#111',
+  link: '#0055ff',
+  accent: '#ffc400',
+  card: '#ffffff',
+}
 
-export type ThemeType = typeof lightTheme;
+export const darkTheme: Theme = {
+  background: '#111',
+  text: '#f0f0f0',
+  link: '#4fa3ff',
+  accent: '#ff6b00',
+  card: '#1f1f1f',
+}
