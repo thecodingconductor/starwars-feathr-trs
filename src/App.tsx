@@ -12,11 +12,17 @@ import PlanetPage from './pages/planets/PlanetPage';
 import StarshipPage from './pages/starships/StarshipPage';
 import NavBar from './components/NavBar';
 import Layout from './components/Layout';
+import IntroScreen from './components/IntroScreen';
 
 
 function App() {
 
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [showIntro, setShowIntro] = useState(true)
+
+  if(showIntro) {
+    return <IntroScreen onFinish={() => setShowIntro(false)}/>
+  }
 
   const toggleTheme = () => setIsDarkMode(prev => !prev)
 
