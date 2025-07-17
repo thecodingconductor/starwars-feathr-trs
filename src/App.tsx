@@ -10,6 +10,9 @@ import PersonPage from './pages/people/PersonPage'
 import './App.css'
 import PlanetPage from './pages/planets/PlanetPage';
 import StarshipPage from './pages/starships/StarshipPage';
+import NavBar from './components/NavBar';
+import Layout from './components/Layout';
+
 
 function App() {
 
@@ -21,14 +24,14 @@ function App() {
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path="/" element={<Home />}/>
-
-          <Route path={'/people/:id'} element={<PersonPage />} />
+          <Route element={<Layout /> }>
+            <Route path="/" element={<Home />}/>
+            <Route path={'/people/:id'} element={<PersonPage />} />
+            <Route path={'/films/:id'} element={<FilmPage />}/>
+            <Route path={'/planets/:id'} element={<PlanetPage />}/>
+            <Route path={'/starships/:id'} element={<StarshipPage />}/>
+          </Route>
           
-
-          <Route path={'/films/:id'} element={<FilmPage />}/>
-          <Route path={'/planets/:id'} element={<PlanetPage />}/>
-           <Route path={'/starships/:id'} element={<StarshipPage />}/>
         </Routes>
       </Suspense>
     </ThemeProvider>
