@@ -3,9 +3,11 @@ import { fetchPeople } from "../api/swapi"
 import { usePersonStore } from '../store/usePersonStore'
 import { filterAndSort } from "../utils/filterAndSort";
 import styled from "styled-components";
-import { SafeImage } from "../components/SafeImage";
 import { motion, AnimatePresence } from 'framer-motion';
 import { CharacterCard } from "../components/CharacterCard";
+import { Pagination } from "../components/Pagniation";
+import { EntityModal } from "../components/EntityModal";
+import PersonPage from "./people/PersonPage";
 
 
 const fadeVariants = {
@@ -78,7 +80,7 @@ const SearchBar = styled.input`
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem;
   margin-top: 2rem;
 
@@ -89,29 +91,6 @@ const Grid = styled.div`
     grid-template-columns: repeat(5, minmax(160px, 1fr));
   }
 `;
-
-const PaginationWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 2rem;
-`;
-
-const Button = styled.button`
-  background: #222;
-  color: #fff;
-  border: 1px solid #444;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-`;
-
 
 const SearchWrapper = styled.div`
   display: flex;
@@ -140,6 +119,7 @@ const EmptyResults = styled.div`
 `;
 
 const HomePage = () => {
+  // Zustand State
   const data = usePersonStore((s) => s.data);
   const query = usePersonStore((s) => s.query);
   const setQuery = usePersonStore((s) => s.setQuery);
@@ -147,18 +127,23 @@ const HomePage = () => {
 
   const people = filterAndSort(data, query, 'name');
 
+  const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null)
+
+  console.log(selectedPersonId)
+
   useEffect(() => {
     usePersonStore.getState().reset();
     fetchPeople().then(setPeople);
   }, []);
 
+  // Pagination Logic
   const [page, setPage] = useState(1);
   const itemsPerPage = 6;
   const totalPages = Math.ceil(people.length / itemsPerPage);
   const paginated = people.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
   const isSearching = query.length > 0;
-  const popularCharacters = data.slice(0, 5); // show 5 by default
+  const popularCharacters = data.slice(0, 5);
 
   return (
     <PageBackground>
@@ -204,22 +189,27 @@ const HomePage = () => {
             <SearchResultsTitle>SEARCH RESULTS</SearchResultsTitle>
             {people.length > 0 ? (
               <>
-                <PaginationWrapper>
-                  <Button onClick={() => setPage((p) => p - 1)} disabled={page === 1}>
-                    Previous
-                  </Button>
-                  <span style={{ color: '#fff', alignSelf: 'center' }}>
-                    Page {page} of {totalPages}
-                  </span>
-                  <Button onClick={() => setPage((p) => p + 1)} disabled={page === totalPages}>
-                    Next
-                  </Button>
-                </PaginationWrapper>
+                <Pagination
+                  page={page}
+                  totalPages={totalPages}
+                  onPrev={() => setPage((p) => p - 1)}
+                  onNext={() => setPage((p) => p + 1)}
+                />
                 <Grid>
                   {paginated.map((person) => (
-                    <CharacterCard key={person.url} person={person} />
+                    <CharacterCard 
+                      key={person.url} 
+                      person={person} 
+                      onClick={() => setSelectedPersonId(person.url.split('/').at(-1)!)}/>
                   ))}
                 </Grid>
+               
+                  <EntityModal
+                    open={!!selectedPersonId}
+                    onOpenChange={open => !open && setSelectedPersonId(null)}
+                  >
+                    {selectedPersonId && <PersonPage id={selectedPersonId} />}
+                  </EntityModal>
               </>
             ) : (
               <EmptyResults>No results found.</EmptyResults>
@@ -237,9 +227,15 @@ const HomePage = () => {
               <SearchResultsTitle>POPULAR CHARACTERS</SearchResultsTitle>
               <Grid>
                 {popularCharacters.map((person) => (
-                  <CharacterCard key={person.url} person={person} />
+                  <CharacterCard key={person.url} person={person}  onClick={() => setSelectedPersonId(person.url.split('/').at(-1)!)}/>
                 ))}
               </Grid>
+              <EntityModal
+                    open={!!selectedPersonId}
+                    onOpenChange={open => !open && setSelectedPersonId(null)}
+                  >
+                    {selectedPersonId && <PersonPage id={selectedPersonId} />}
+              </EntityModal>
             </PopularContainer>
           </motion.div>
         )}

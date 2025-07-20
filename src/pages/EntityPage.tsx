@@ -7,14 +7,12 @@ interface EntityPageProps<T> {
   getById: (id: string) => T | undefined
   extractRelated: (entity: T) => Promise<Record<string, any>>
   render: (entity: T, related: Record<string, any>) => JSX.Element
+  id: string
 }
 
 // Generic Entity Page (Person, Planet, Starship Pages are all very similar.)
 
-function EntityPage<T>({ fetchEntity, getById, extractRelated, render }: EntityPageProps<T>) {
-
-
-    const { id } = useParams<{ id: string }>()
+function EntityPage<T>({ id, fetchEntity, getById, extractRelated, render }: EntityPageProps<T>) {
 
     const [entity, setEntity] = useState<T | null>(null)
     const [related, setRelated] = useState<Record<string, any>>({})
