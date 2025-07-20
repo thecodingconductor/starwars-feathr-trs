@@ -10,6 +10,7 @@ const PageBackground = styled.div`
   min-height: 100vh;
   background: linear-gradient(180deg, #71405A 0%, #35394A 79.33%, #3F4957 99.52%);
   padding: 1.5rem;
+  padding-top: 80px;
 `;
 
 const Hero = styled.div`
@@ -23,7 +24,6 @@ const Hero = styled.div`
 
 const HeroContent = styled.div`
   width: 100%;
-  max-width: 960px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,6 +37,11 @@ const HeroContent = styled.div`
 const Logo = styled.img`
   width: 240px;
   margin-bottom: 1.5rem;
+
+  @media (min-width: 768px) {
+   width: 560px;
+  }
+
 `;
 
 const HeroTitle = styled.h1`
@@ -54,6 +59,7 @@ const SearchBar = styled.input`
   font-size: 1rem;
   width: 100%;
   max-width: 320px;
+  background-color: rgba(0, 0, 0, 0.65);
 
   &::placeholder {
     font-family: ${({theme}) => theme.headingFont};
