@@ -1,4 +1,11 @@
-import type { Theme } from './types'
+export interface Theme {
+  background: string
+  text: string
+  link: string
+  accent: string
+  card: string
+}
+
 
 export const lightTheme: Theme = {
   background: '#f0f0f0',
@@ -15,3 +22,5 @@ export const darkTheme: Theme = {
   accent: '#ff6b00',
   card: '#1f1f1f',
 }
+
+export type ThemeType = Theme;
