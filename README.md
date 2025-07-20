@@ -1,5 +1,38 @@
 # starwars-feathr-trs
-Tristan Rais-Sherman Feathr Take home Project
+Tristan Rais-Sherman Feathr Takehome Project
+
+# Tech Stack
+
+- React.js
+- TypeScript 
+- CSS3, HTML5
+- Zustand
+- Styled Components
+
+# Usage
+
+To run the app simply run the following commands in the root folder
+
+- npm i
+- npm run dev
+
+# Approach
+
+Any time I start a new project, I use it as an opporunity to improve, challenge myself, and use new technologies, libraries, and approaches.
+
+- Zustand
+  I have never used Zustand in a project, so this was a great opportunity to try it out to manage app state.
+- Abstraction
+  As I got further into building out the application, and writing logic to manage fetching People, Planets, and Starships, adding filtering and sorting capabilities, I discvored I was rewriting a lot of similar code. 
+
+  Each page in this app did similar things for each Entity type. So I thought to make a generic EntityPage, and a generic EntityStore, to follow DRY principles.
+
+  I'm very happy with this approach, and feel like each component does simple tasks, the files are clean and easy to debug. Each entity page, like PlanetPage, PersonPage, simply pulls in some functions, and passes them to the EntityPage component, which handles loading and rendering the data.
+
+  The layout and styling itself is handled by the renderers in /renderers
+
+  It is certainly possible I went too far and got too cute with it, but I find this easy to read and digest for review.
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
