@@ -4,6 +4,7 @@ import { usePersonStore } from '../store/usePersonStore'
 import { Link } from 'react-router-dom'
 import { filterAndSort } from "../utils/filterAndSort";
 import styled from "styled-components";
+import { SafeImage } from "../components/SafeImage";
 
 const Grid = styled.div`
   display: grid;
@@ -25,7 +26,7 @@ const Card = styled.div`
   }
 `;
 
-const Avatar = styled.img`
+const Avatar = styled(SafeImage)`
   width: 80px;
   height: 80px;
   object-fit: cover;
@@ -105,12 +106,8 @@ const Home = () => {
             <Link key={person.url} to={`/people/${id}`} style={{ textDecoration: 'none' }}>
               <Card>
                 <Avatar
-                  src={person.image || "https://placehold.co/80x80?text=No+Image"}
+                  src={person.image}
                   alt={person.name}
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = "https://placehold.co/80x80?text=No+Image";
-                  }}
                 />
                 <Name>{person.name}</Name>
               </Card>
