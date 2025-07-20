@@ -4,13 +4,16 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { useState } from 'react'
 
 const Nav = styled.nav`
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   gap: 1.5rem;
   padding: 1rem 2rem;
-  background-color: #111;
   color: white;
   align-items: center;
+  background-color: transparent;
 `
 
 const StyledLink = styled(Link)`
