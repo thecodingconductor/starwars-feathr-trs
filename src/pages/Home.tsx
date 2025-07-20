@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { fetchPeople } from "../api/swapi"
 import { usePersonStore } from '../store/usePersonStore'
-import { Link } from 'react-router-dom'
 import { filterAndSort } from "../utils/filterAndSort";
 import styled from "styled-components";
 import { SafeImage } from "../components/SafeImage";
 import { motion, AnimatePresence } from 'framer-motion';
+import { CharacterCard } from "../components/CharacterCard";
 
 
 const fadeVariants = {
@@ -88,28 +88,6 @@ const Grid = styled.div`
   @media (min-width: 900px) {
     grid-template-columns: repeat(5, minmax(160px, 1fr));
   }
-`;
-
-const Card = styled.div`
-  background: #111;
-  border: 1px solid #333;
-  border-radius: 12px;
-  padding: 1rem;
-  text-align: center;
-`;
-
-const Avatar = styled(SafeImage)`
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 0.5rem;
-`;
-
-const Name = styled.div`
-  color: #eee;
-  font-weight: bold;
-  font-size: 1rem;
 `;
 
 const PaginationWrapper = styled.div`
@@ -238,17 +216,9 @@ const HomePage = () => {
                   </Button>
                 </PaginationWrapper>
                 <Grid>
-                  {paginated.map((person) => {
-                    const id = person.url.split('/').at(-1);
-                    return (
-                      <Link key={person.url} to={`/people/${id}`} style={{ textDecoration: 'none' }}>
-                        <Card>
-                          <Avatar src={person.image} alt={person.name} />
-                          <Name>{person.name}</Name>
-                        </Card>
-                      </Link>
-                    );
-                  })}
+                  {paginated.map((person) => (
+                    <CharacterCard key={person.url} person={person} />
+                  ))}
                 </Grid>
               </>
             ) : (
@@ -266,17 +236,9 @@ const HomePage = () => {
             <PopularContainer>
               <SearchResultsTitle>POPULAR CHARACTERS</SearchResultsTitle>
               <Grid>
-                {popularCharacters.map((person) => {
-                  const id = person.url.split('/').at(-1);
-                  return (
-                    <Link key={person.url} to={`/people/${id}`} style={{ textDecoration: 'none' }}>
-                      <Card>
-                        <Avatar src={person.image} alt={person.name} />
-                        <Name>{person.name}</Name>
-                      </Card>
-                    </Link>
-                  );
-                })}
+                {popularCharacters.map((person) => (
+                  <CharacterCard key={person.url} person={person} />
+                ))}
               </Grid>
             </PopularContainer>
           </motion.div>
