@@ -68,6 +68,7 @@ const SearchBar = styled.input`
   width: 100%;
   max-width: 320px;
   background-color: rgba(0, 0, 0, 0.65);
+  color: #fff;
 
   &::placeholder {
     font-family: ${({theme}) => theme.headingFont};
@@ -80,6 +81,13 @@ const Grid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 1rem;
   margin-top: 2rem;
+
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(3, minmax(160px, 1fr));
+  }
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(5, minmax(160px, 1fr));
+  }
 `;
 
 const Card = styled.div`
