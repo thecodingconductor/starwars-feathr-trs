@@ -5,12 +5,20 @@ import { Link } from 'react-router-dom'
 import { filterAndSort } from "../utils/filterAndSort";
 import styled from "styled-components";
 import { SafeImage } from "../components/SafeImage";
+import { motion, AnimatePresence } from 'framer-motion';
+
+
+const fadeVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  exit: { opacity: 0, y: -10, transition: { duration: 0.3 } },
+};
 
 const PageBackground = styled.div`
   min-height: 100vh;
   background: linear-gradient(180deg, #71405A 0%, #35394A 79.33%, #3F4957 99.52%);
   padding: 1.5rem;
-  padding-top: 80px;
+  padding-top: 60px;
 `;
 
 const Hero = styled.div`
@@ -118,6 +126,48 @@ const Button = styled.button`
   }
 `;
 
+const PopularCharactersContainer = styled.div`
+  background: linear-gradient(180deg, #323232 0%, #423635 51.92%);  
+  
+  border-radius: 12px;
+  padding: 2rem 1rem;
+  margin-top: 2rem;
+
+  @media (min-width: 768px) {
+    padding: 2.5rem;
+  }
+`;
+
+const PopularCharactersTitle = styled.h2`
+  text-align: center;
+`
+
+const SearchWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+`;
+
+const SearchResultsTitle = styled.h2`
+  text-align: center;
+  margin-top: 3rem;
+  color: white;
+  font-family: ${({ theme }) => theme.headingFont};
+`;
+
+const PopularContainer = styled.section`
+  background-color: #2b2b2b;
+  padding: 2rem 1rem;
+  margin-top: 2rem;
+  border-radius: 16px;
+`;
+
+const EmptyResults = styled.div`
+  text-align: center;
+  color: #aaa;
+  margin-top: 2rem;
+`;
+
 const HomePage = () => {
   const data = usePersonStore((s) => s.data);
   const query = usePersonStore((s) => s.query);
@@ -136,57 +186,109 @@ const HomePage = () => {
   const totalPages = Math.ceil(people.length / itemsPerPage);
   const paginated = people.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
-  const hideHero = query.length > 0;
+  const isSearching = query.length > 0;
+  const popularCharacters = data.slice(0, 5); // show 5 by default
 
   return (
     <PageBackground>
-      {!hideHero && (
-        
-          <Hero>
-            <HeroContent>
-               <Logo src="/logo-lockup.png" alt="Star Wars Explorer Logo" />
-                <HeroTitle>Welcome to this easily searchable database for hardcore Star Wars fans!</HeroTitle>
-            </HeroContent>
-         
-        </Hero>
-        
-      )}
-      <SearchBar
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Use the force..."
-      />
+      <AnimatePresence mode="wait">
+        {!isSearching && (
+          <motion.div
+            key="hero"
+            variants={fadeVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <Hero>
+              <HeroContent>
+                <Logo src="/logo-lockup.png" alt="Star Wars Explorer Logo" />
+                <HeroTitle>
+                  Welcome to this easily searchable database for hardcore Star Wars fans!
+                </HeroTitle>
+              </HeroContent>
+            </Hero>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {query.length > 0 && (
-        <>
-          <PaginationWrapper>
-            <Button onClick={() => setPage((p) => p - 1)} disabled={page === 1}>
-              Previous
-            </Button>
-            <span style={{ color: '#fff', alignSelf: 'center' }}>
-              Page {page} of {totalPages}
-            </span>
-            <Button onClick={() => setPage((p) => p + 1)} disabled={page === totalPages}>
-              Next
-            </Button>
-          </PaginationWrapper>
+      <SearchWrapper>
+        <SearchBar
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Use the force..."
+        />
+      </SearchWrapper>
 
-          <Grid>
-            {paginated.map((person) => {
-              const id = person.url.split('/').at(-1);
-              return (
-                <Link key={person.url} to={`/people/${id}`} style={{ textDecoration: 'none' }}>
-                  <Card>
-                    <Avatar src={person.image} alt={person.name} />
-                    <Name>{person.name}</Name>
-                  </Card>
-                </Link>
-              );
-            })}
-          </Grid>
-        </>
-      )}
+      <AnimatePresence mode="wait">
+        {isSearching ? (
+          <motion.div
+            key="results"
+            variants={fadeVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <SearchResultsTitle>SEARCH RESULTS</SearchResultsTitle>
+            {people.length > 0 ? (
+              <>
+                <PaginationWrapper>
+                  <Button onClick={() => setPage((p) => p - 1)} disabled={page === 1}>
+                    Previous
+                  </Button>
+                  <span style={{ color: '#fff', alignSelf: 'center' }}>
+                    Page {page} of {totalPages}
+                  </span>
+                  <Button onClick={() => setPage((p) => p + 1)} disabled={page === totalPages}>
+                    Next
+                  </Button>
+                </PaginationWrapper>
+                <Grid>
+                  {paginated.map((person) => {
+                    const id = person.url.split('/').at(-1);
+                    return (
+                      <Link key={person.url} to={`/people/${id}`} style={{ textDecoration: 'none' }}>
+                        <Card>
+                          <Avatar src={person.image} alt={person.name} />
+                          <Name>{person.name}</Name>
+                        </Card>
+                      </Link>
+                    );
+                  })}
+                </Grid>
+              </>
+            ) : (
+              <EmptyResults>No results found.</EmptyResults>
+            )}
+          </motion.div>
+        ) : (
+          <motion.div
+            key="popular"
+            variants={fadeVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <PopularContainer>
+              <SearchResultsTitle>POPULAR CHARACTERS</SearchResultsTitle>
+              <Grid>
+                {popularCharacters.map((person) => {
+                  const id = person.url.split('/').at(-1);
+                  return (
+                    <Link key={person.url} to={`/people/${id}`} style={{ textDecoration: 'none' }}>
+                      <Card>
+                        <Avatar src={person.image} alt={person.name} />
+                        <Name>{person.name}</Name>
+                      </Card>
+                    </Link>
+                  );
+                })}
+              </Grid>
+            </PopularContainer>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </PageBackground>
   );
 };
