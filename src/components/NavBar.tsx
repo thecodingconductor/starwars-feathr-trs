@@ -14,6 +14,11 @@ const Nav = styled.nav`
   color: white;
   align-items: center;
   background-color: transparent;
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+  }
+
 `
 
 const StyledLink = styled(Link)`
@@ -29,7 +34,7 @@ const StyledLink = styled(Link)`
 
 const DesktopLinks = styled.div`
   display: flex;
-  gap: 1.5rem;
+  gap: 70px;
   @media (max-width: 700px) {
     display: none;
   }

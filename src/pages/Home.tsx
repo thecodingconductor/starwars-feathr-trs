@@ -21,14 +21,28 @@ const Hero = styled.div`
   text-align: center;
 `;
 
+const HeroContent = styled.div`
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    align-items: flex-start;
+    text-align: left;
+  }
+`
+
 const Logo = styled.img`
-  width: 180px;
+  width: 240px;
   margin-bottom: 1.5rem;
 `;
 
 const HeroTitle = styled.h1`
   color: white;
   font-size: 1.5rem;
+  font-family: ${({theme}) => theme.fontFamily}
   max-width: 360px;
   margin-bottom: 1.5rem;
 `;
@@ -40,6 +54,11 @@ const SearchBar = styled.input`
   font-size: 1rem;
   width: 100%;
   max-width: 320px;
+
+  &::placeholder {
+    font-family: ${({theme}) => theme.headingFont};
+    color: #fff;
+  }
 `;
 
 const Grid = styled.div`
@@ -116,16 +135,21 @@ const HomePage = () => {
   return (
     <PageBackground>
       {!hideHero && (
-        <Hero>
-          <Logo src="/logo-lockup.png" alt="Star Wars Explorer Logo" />
-          <HeroTitle>Welcome to this easily searchable database for hardcore Star Wars fans!</HeroTitle>
+        
+          <Hero>
+            <HeroContent>
+               <Logo src="/logo-lockup.png" alt="Star Wars Explorer Logo" />
+                <HeroTitle>Welcome to this easily searchable database for hardcore Star Wars fans!</HeroTitle>
+            </HeroContent>
+         
         </Hero>
+        
       )}
       <SearchBar
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search characters..."
+        placeholder="Use the force..."
       />
 
       {query.length > 0 && (
