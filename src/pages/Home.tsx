@@ -126,21 +126,6 @@ const Button = styled.button`
   }
 `;
 
-const PopularCharactersContainer = styled.div`
-  background: linear-gradient(180deg, #323232 0%, #423635 51.92%);  
-  
-  border-radius: 12px;
-  padding: 2rem 1rem;
-  margin-top: 2rem;
-
-  @media (min-width: 768px) {
-    padding: 2.5rem;
-  }
-`;
-
-const PopularCharactersTitle = styled.h2`
-  text-align: center;
-`
 
 const SearchWrapper = styled.div`
   display: flex;
