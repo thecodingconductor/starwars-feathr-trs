@@ -6,10 +6,46 @@ import { filterAndSort } from "../utils/filterAndSort";
 import styled from "styled-components";
 import { SafeImage } from "../components/SafeImage";
 
+const PageBackground = styled.div`
+  min-height: 100vh;
+  background: linear-gradient(180deg, #71405A 0%, #35394A 79.33%, #3F4957 99.52%);
+  padding: 1.5rem;
+`;
+
+const Hero = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  text-align: center;
+`;
+
+const Logo = styled.img`
+  width: 180px;
+  margin-bottom: 1.5rem;
+`;
+
+const HeroTitle = styled.h1`
+  color: white;
+  font-size: 1.5rem;
+  max-width: 360px;
+  margin-bottom: 1.5rem;
+`;
+
+const SearchBar = styled.input`
+  padding: 0.75rem 1.25rem;
+  border-radius: 50px;
+  border: none;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 320px;
+`;
+
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1.5rem;
+  gap: 1rem;
   margin-top: 2rem;
 `;
 
@@ -19,11 +55,6 @@ const Card = styled.div`
   border-radius: 12px;
   padding: 1rem;
   text-align: center;
-  transition: transform 0.2s ease-in-out;
-
-  &:hover {
-    transform: scale(1.03);
-  }
 `;
 
 const Avatar = styled(SafeImage)`
@@ -31,9 +62,8 @@ const Avatar = styled(SafeImage)`
   height: 80px;
   object-fit: cover;
   border-radius: 50%;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 `;
-
 
 const Name = styled.div`
   color: #eee;
@@ -63,96 +93,72 @@ const Button = styled.button`
   }
 `;
 
-const Home = () => {
+const HomePage = () => {
+  const data = usePersonStore((s) => s.data);
+  const query = usePersonStore((s) => s.query);
+  const setQuery = usePersonStore((s) => s.setQuery);
+  const setPeople = usePersonStore((s) => s.setData);
 
- const data = usePersonStore((s) => s.data);
- const query = usePersonStore((s) => s.query);
- const setQuery = usePersonStore((s) => s.setQuery) 
- const setPeople = usePersonStore((s) => s.setData);
-
- const people = filterAndSort(data, query, 'name');
+  const people = filterAndSort(data, query, 'name');
 
   useEffect(() => {
-    // Fetch People on Page Load -> Load into Zustand State.
-    // call Zustand reset to remvoe query/
     usePersonStore.getState().reset();
-    fetchPeople().then(setPeople)
+    fetchPeople().then(setPeople);
   }, []);
-
 
   const [page, setPage] = useState(1);
   const itemsPerPage = 6;
   const totalPages = Math.ceil(people.length / itemsPerPage);
   const paginated = people.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
+  const hideHero = query.length > 0;
 
-  
-  
   return (
-    <main style={{ padding: '2rem' }}>
-      <h1>Star Wars Explorer People</h1>
-      <input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Use the force..."/>
-      <PaginationWrapper>
-        <Button onClick={() => setPage((p) => p - 1)} disabled={page === 1}>Previous</Button>
-        <span style={{ color: '#fff', alignSelf: 'center' }}>
-          Page {page} of {totalPages}
-        </span>
-        <Button onClick={() => setPage((p) => p + 1)} disabled={page === totalPages}>Next</Button>
-      </PaginationWrapper>
-      <Grid>
-        {paginated.map((person) => {
-          const id = person.url.split('/').at(-1)
-          return (
-            <Link key={person.url} to={`/people/${id}`} style={{ textDecoration: 'none' }}>
-              <Card>
-                <Avatar
-                  src={person.image}
-                  alt={person.name}
-                />
-                <Name>{person.name}</Name>
-              </Card>
-            </Link>
-          )
-        })}
-      </Grid>
-      {/* <ul>
-       {people.map((person) => {
-        const id = person.url.split('/').at(-1);
-
-        return (
-          <Link key={person.url} to={`/people/${id}`}>
-            <div>
-              {person.image ? 
-              (
-                <>
-                  <img
-                    src={person.image || 'https://placehold.co/80x80?text=No+Image'}
-                    alt={person.name}
-                    style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '50%' }}
-                  />
-                  <div>{person.name}</div>
-                </>
-                  
-              ) : (
-                <>
-                  <img
-                    src={'https://placehold.co/80x80?text=No+Image'}
-                    alt={person.name}
-                    style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '50%' }}
-                  />
-                  <div>{person.name}</div>
-                </>
-              )}
-          
-        </div>
-         </Link>
-        )
-       }
-       
+    <PageBackground>
+      {!hideHero && (
+        <Hero>
+          <Logo src="/logo-lockup.png" alt="Star Wars Explorer Logo" />
+          <HeroTitle>Welcome to this easily searchable database for hardcore Star Wars fans!</HeroTitle>
+        </Hero>
       )}
-      </ul> */}
-    </main>
-  )
-}
+      <SearchBar
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search characters..."
+      />
 
-export default Home
+      {query.length > 0 && (
+        <>
+          <PaginationWrapper>
+            <Button onClick={() => setPage((p) => p - 1)} disabled={page === 1}>
+              Previous
+            </Button>
+            <span style={{ color: '#fff', alignSelf: 'center' }}>
+              Page {page} of {totalPages}
+            </span>
+            <Button onClick={() => setPage((p) => p + 1)} disabled={page === totalPages}>
+              Next
+            </Button>
+          </PaginationWrapper>
+
+          <Grid>
+            {paginated.map((person) => {
+              const id = person.url.split('/').at(-1);
+              return (
+                <Link key={person.url} to={`/people/${id}`} style={{ textDecoration: 'none' }}>
+                  <Card>
+                    <Avatar src={person.image} alt={person.name} />
+                    <Name>{person.name}</Name>
+                  </Card>
+                </Link>
+              );
+            })}
+          </Grid>
+        </>
+      )}
+    </PageBackground>
+  );
+};
+
+export default HomePage;

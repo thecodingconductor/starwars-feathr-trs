@@ -10,7 +10,6 @@ import PersonPage from './pages/people/PersonPage'
 import './App.css'
 import PlanetPage from './pages/planets/PlanetPage';
 import StarshipPage from './pages/starships/StarshipPage';
-import NavBar from './components/NavBar';
 import Layout from './components/Layout';
 import Planets from './pages/planets/Planets';
 import Starships from './pages/starships/Starships';
