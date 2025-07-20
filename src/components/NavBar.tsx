@@ -17,6 +17,7 @@ const StyledLink = styled(Link)`
   color: white;
   text-decoration: none;
   font-weight: bold;
+  font-family: ${({ theme }) => theme.headingFont};
 
   &:hover {
     text-decoration: underline;
@@ -38,6 +39,7 @@ const MobileMenuButton = styled(Dialog.Trigger)`
   color: white;
   font-size: 1.2rem;
   font-weight: bold;
+  font-family: ${({ theme }) => theme.headingFont};
   cursor: pointer;
   @media (max-width: 700px) {
     display: block;
