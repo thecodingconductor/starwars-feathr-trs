@@ -3,15 +3,25 @@ import { Suspense } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme } from './theme/theme';
 import GlobalStyle from './theme/global';
-import Home from './pages/Home';
+
 import PersonPage from './pages/people/PersonPage';
 import PlanetPage from './pages/planets/PlanetPage';
 import StarshipPage from './pages/starships/StarshipPage';
 import Layout from './components/Layout';
-import Planets from './pages/planets/Planets';
-import Starships from './pages/starships/Starships';
+
 import { useModalStore } from './store/useModalStore';
 import { EntityModal } from './components/EntityModal';
+import SearchPage from './pages/SearchPage'; 
+import { fetchPeople, fetchPlanets, fetchStarships } from './api/swapi'; 
+import { usePersonStore } from './store/usePersonStore';
+import { usePlanetStore } from './store/usePlanetStore';
+import { useStarshipStore } from './store/useStarshipStore';
+
+import { EntityCard }from './components/EntityCard'
+
+// import PlanetCard from './components/cards/PlanetCard';
+// import StarshipCard from './components/cards/StarshipCard';
+
 
 function App() {
 
@@ -26,14 +36,48 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Routes location={backgroundLocation || location}>
           <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path={'/people/:id'} element={<PersonPage />} />
-         
-            <Route path={'/planets'} element={<Planets />} />
-            <Route path={'/planets/:id'} element={<PlanetPage />} />
+            <Route
+                  path="/"
+                  element={
+                    <SearchPage
+                      title="Popular Characters"
+                      entityKey="people"
+                      store={usePersonStore}
+                      fetchFn={fetchPeople}
+                      renderCard={(person) => <EntityCard entity={person} />}
+                      baseUrl="/people"
+                    />
+                  }
+                />
 
-            <Route path={'/starships'} element={<Starships />} />
-            <Route path={'/starships/:id'} element={<StarshipPage />} />
+                <Route
+                  path="/planets"
+                  element={
+                    <SearchPage
+                      title="Popular Planets"
+                      entityKey="planets"
+                      store={usePlanetStore}
+                      fetchFn={fetchPlanets}
+                      renderCard={(planet) => <EntityCard entity={planet} />}
+                      baseUrl="/planets"
+                    />
+                  }
+                />
+
+                <Route
+                  path="/starships"
+                  element={
+                    <SearchPage
+                      title="Popular Starships"
+                      entityKey="starships"
+                      store={useStarshipStore}
+                      fetchFn={fetchStarships}
+                      renderCard={(ship) => <EntityCard entity={ship} />}
+                      baseUrl="/starships"
+                    />
+                  }
+                />
+           
           </Route>
         </Routes>
 
