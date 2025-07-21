@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react"
+import { useLocation, Link } from 'react-router-dom';
+import { useModalStore } from '../store/useModalStore';
 import { fetchPeople } from "../api/swapi"
 import { usePersonStore } from '../store/usePersonStore'
 import { filterAndSort } from "../utils/filterAndSort";
@@ -120,6 +122,10 @@ const EmptyResults = styled.div`
 
 const HomePage = () => {
   // Zustand State
+
+  const location = useLocation();
+  const setLocationBackground = useModalStore((s) => s.setBackgroundLocation)
+
   const data = usePersonStore((s) => s.data);
   const query = usePersonStore((s) => s.query);
   const setQuery = usePersonStore((s) => s.setQuery);
@@ -197,10 +203,12 @@ const HomePage = () => {
                 />
                 <Grid>
                   {paginated.map((person) => (
-                    <CharacterCard 
-                      key={person.url} 
-                      person={person} 
-                      onClick={() => setSelectedPersonId(person.url.split('/').at(-1)!)}/>
+                    <Link  key={person.url}  to={`/person/${person.url.split('/').at(-1)}`} onClick={() => setLocationBackground(location)}>
+                       <CharacterCard 
+                          person={person} 
+                         />
+                    </Link>
+                   
                   ))}
                 </Grid>
                

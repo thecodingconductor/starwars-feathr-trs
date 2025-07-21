@@ -34,13 +34,12 @@ interface CharacterCardProps {
     name: string;
     image?: string;
   };
-  onClick: () => void
 }
 
-export const CharacterCard = ({ person, onClick }: CharacterCardProps ) => {
-  const id = person.url.split('/').at(-1);
+export const CharacterCard = ({ person }: CharacterCardProps ) => {
+  
   return (
-    <div onClick={onClick} style={{ cursor: 'pointer' }}>
+    <div style={{ cursor: 'pointer' }}>
       <Card>
         <Avatar src={person.image || '/fallback.jpg'} alt={person.name} />
         <Name>{person.name}</Name>

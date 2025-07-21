@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { Suspense } from 'react'
 import { ThemeProvider } from 'styled-components';
 import { useState } from 'react';
@@ -12,11 +12,17 @@ import StarshipPage from './pages/starships/StarshipPage';
 import Layout from './components/Layout';
 import Planets from './pages/planets/Planets';
 import Starships from './pages/starships/Starships';
+import { useModalStore } from './store/useModalStore';
+import { EntityModal } from './components/EntityModal';
 
 
 function App() {
 
   const [isDarkMode, setIsDarkMode] = useState(true);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const backgroundLocation = useModalStore((s) => s.backgroundLocation);    
 
   const toggleTheme = () => setIsDarkMode(prev => !prev)
 
@@ -24,7 +30,7 @@ function App() {
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <GlobalStyle />
       <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
+        <Routes location={backgroundLocation || location}>
           <Route element={<Layout /> }>
             <Route path="/" element={<Home />}/>
             {/* <Route path={'/people/:id'} element={<PersonPage />} /> */}
@@ -38,6 +44,27 @@ function App() {
           </Route>
           
         </Routes>
+
+              {backgroundLocation && (
+            <Routes>
+              <Route
+                path="/person/:id"
+                element={
+                  <EntityModal
+                    open
+                    onOpenChange={(open) => {
+                      if (!open) {
+                        useModalStore.getState().clearBackgroundLocation();
+                        navigate(-1);
+                      }
+                    }}
+                  >
+                    <PersonPage />
+                  </EntityModal>
+                }
+              />
+            </Routes>
+          )}
       </Suspense>
     </ThemeProvider>
    
