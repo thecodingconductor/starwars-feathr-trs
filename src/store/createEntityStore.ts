@@ -52,7 +52,7 @@ export function createEntityStore<T extends EntityWithUrl>(sortKey: keyof T, per
         reset: () => set({ query: '', data: [] }),
       }),
       {
-        name: persistKey, // unique key for localStorage
+        name: persistKey, 
       }
     )
   );

@@ -4,9 +4,14 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 import { globalIgnores } from 'eslint/config';
+import path from 'node:path';
 
 export default tseslint.config([
-  globalIgnores(['dist']),
+  globalIgnores([
+    'dist',
+    'node_modules',
+    'vite.config.ts',
+  ]),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -15,9 +20,15 @@ export default tseslint.config([
       reactHooks.configs['recommended-latest'],
       reactRefresh.configs.vite,
     ],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+   languageOptions: {
+      parserOptions: {
+        project: './tsconfig.json', 
+        tsconfigRootDir: path.resolve(), 
+      },
     },
+    rules: {
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-explicit-any': 'warn',
+    }
   },
 ]);

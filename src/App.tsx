@@ -16,6 +16,7 @@ import { EntityModal } from './components/EntityModal';
 function App() {
 
   const navigate = useNavigate();
+ 
   const location = useLocation();
   const backgroundLocation = useModalStore(s => s.backgroundLocation);
 

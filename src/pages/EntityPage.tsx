@@ -35,8 +35,8 @@ function EntityPage<T>({ id, fetchEntity, getById, extractRelated, render }: Ent
       setLoading(false);
     };
 
-    load();
-  }, [id]);
+    void load();
+  }, [id, extractRelated, fetchEntity, getById]);
 
   if (loading) return <p>Loading...</p>;
   if (!entity) return <p>Entity not found.</p>;
