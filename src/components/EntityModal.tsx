@@ -1,4 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog';
+import { VisuallyHidden }  from '@radix-ui/react-visually-hidden'
 import styled from 'styled-components';
 import type { ReactNode } from 'react';
 
@@ -51,6 +52,9 @@ export const EntityModal = ({ open, onOpenChange, children }: EntityModalProps) 
       <Overlay>
         <Panel>
           <Close aria-label="Close">× CLOSE</Close>
+          <VisuallyHidden>
+            <Dialog.Title>Entity Modal</Dialog.Title>
+          </VisuallyHidden>
           {children}
         </Panel>
       </Overlay>

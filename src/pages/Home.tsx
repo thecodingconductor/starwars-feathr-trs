@@ -7,7 +7,7 @@ import { filterAndSort } from '../utils/filterAndSort';
 import styled, { keyframes } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CharacterCard } from '../components/CharacterCard';
-import { Pagination } from '../components/Pagniation';
+import { Pagination } from '../components/Pagination';
 
 const fadeVariants = {
   hidden: { opacity: 0, y: 20 },

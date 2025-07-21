@@ -1,9 +1,22 @@
 {
-  "files": [],
   "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "jsx": "react-jsx",
-    "lib": ["dom", "esnext"],
-    "types": ["react"]
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+
+    "noEmit": true, 
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": false,
+
+    "skipLibCheck": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "esModuleInterop": true,
+
+    "types": ["jest", "@testing-library/jest-dom", "node"]
   },
-  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
+  "include": ["src", "vite.config.ts", "jest.setup.ts", "global.d.ts"]
 }

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import ArrowIcon from '/arrow.svg';
+
 
 const pillStyles = css`
   display: inline-flex;
@@ -85,7 +85,7 @@ export const DetailListItem = ({ title, singleItem, multiItems }: DetailListItem
           {singleItem.to ? (
             <Link to={singleItem.to} style={{ display: 'flex', alignItems: 'center' }}>
               <Description>{singleItem.label}</Description>
-              <Arrow src={ArrowIcon} alt="arrow" />
+              <Arrow src={'/arrow.svg'} alt="arrow" />
             </Link>
           ) : (
             <Description>{singleItem.label}</Description>
