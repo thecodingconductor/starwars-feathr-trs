@@ -1,4 +1,3 @@
-import { useParams } from 'react-router-dom';
 import { type JSX } from 'react';
 import { useEffect, useState } from 'react';
 

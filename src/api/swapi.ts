@@ -1,5 +1,5 @@
 import type { Film, Person, Planet, Starship } from '../types/swapi';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 // Simple API functions
 
