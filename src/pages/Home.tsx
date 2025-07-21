@@ -212,12 +212,12 @@ const HomePage = () => {
                   ))}
                 </Grid>
                
-                  <EntityModal
+                  {/* <EntityModal
                     open={!!selectedPersonId}
                     onOpenChange={open => !open && setSelectedPersonId(null)}
                   >
                     {selectedPersonId && <PersonPage id={selectedPersonId} />}
-                  </EntityModal>
+                  </EntityModal> */}
               </>
             ) : (
               <EmptyResults>No results found.</EmptyResults>
@@ -235,15 +235,12 @@ const HomePage = () => {
               <SearchResultsTitle>POPULAR CHARACTERS</SearchResultsTitle>
               <Grid>
                 {popularCharacters.map((person) => (
-                  <CharacterCard key={person.url} person={person}  onClick={() => setSelectedPersonId(person.url.split('/').at(-1)!)}/>
+                  <Link  key={person.url}  to={`/person/${person.url.split('/').at(-1)}`} onClick={() => setLocationBackground(location)}>
+                    <CharacterCard person={person} />
+                  </Link>
+                  
                 ))}
               </Grid>
-              <EntityModal
-                    open={!!selectedPersonId}
-                    onOpenChange={open => !open && setSelectedPersonId(null)}
-                  >
-                    {selectedPersonId && <PersonPage id={selectedPersonId} />}
-              </EntityModal>
             </PopularContainer>
           </motion.div>
         )}
