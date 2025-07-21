@@ -55,7 +55,7 @@ function App() {
                         onOpenChange={(open) => {
                           if (!open) {
                             useModalStore.getState().clearBackgroundLocation();
-                            navigate(-1);
+                            navigate('/');
                           }
                         }}
                       >

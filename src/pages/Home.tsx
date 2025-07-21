@@ -4,7 +4,7 @@ import { useModalStore } from '../store/useModalStore';
 import { fetchPeople } from "../api/swapi"
 import { usePersonStore } from '../store/usePersonStore'
 import { filterAndSort } from "../utils/filterAndSort";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { motion, AnimatePresence } from 'framer-motion';
 import { CharacterCard } from "../components/CharacterCard";
 import { Pagination } from "../components/Pagniation";
@@ -17,6 +17,56 @@ const fadeVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   exit: { opacity: 0, y: -10, transition: { duration: 0.3 } },
 };
+
+const floatMoon1 = keyframes`
+  0%   { transform: translate(100%, 100%) scale(1); opacity: 0; }
+  10%  { opacity: 0.3; }
+  50%  { transform: translate(50%, 50%) scale(1.05); opacity: 0.5; }
+  100% { transform: translate(-30%, -30%) scale(1.1); opacity: 0; }
+`;
+
+const floatMoon2 = keyframes`
+ 0%   { transform: translate(120%, 110%) scale(0.8); opacity: 0; }
+  20%  { opacity: 0.3; }
+  60%  { transform: translate(60%, 40%) scale(1); opacity: 0.5; }
+  100% { transform: translate(-40%, -50%) scale(1.2); opacity: 0; }
+`;
+
+const Moon = styled.div`
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: 0.5;
+`;
+
+const MoonOne = styled(Moon)`
+  width: 80px;
+  height: 80px;
+  background-color: #ffcccc;
+  top: 15%;
+  left: 70%;
+  animation: ${floatMoon1} 30s ease-in-out infinite;
+`;
+
+const MoonTwo = styled(Moon)`
+  width: 100px;
+  height: 100px;
+  background-color: #ff4444;
+  top: 50%;
+  left: 85%;
+  animation: ${floatMoon2} 40s ease-in-out infinite;
+`;
+
+const MoonsWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0; // Send it behind main content
+`;
 
 const PageBackground = styled.div`
   min-height: 100vh;
@@ -163,6 +213,10 @@ const HomePage = () => {
             exit="exit"
           >
             <Hero>
+              <MoonsWrapper>
+            <MoonOne />
+            <MoonTwo />
+          </MoonsWrapper>
               <HeroContent>
                 <Logo src="/logo-lockup.png" alt="Star Wars Explorer Logo" />
                 <HeroTitle>

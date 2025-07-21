@@ -13,6 +13,22 @@ const StarshipTitle = styled.h1`
   margin-bottom: 40px;
 `;
 
+const Wrapper = styled.div`
+  width: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+  margin: 0 150px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  }
+`;
+
+
 const ImageContainer = styled.div`
   display: flex;
   align-items: center;
@@ -32,7 +48,7 @@ export const renderStarship = (
   related: RelatedData
 ) => {
   return (
-    <div>
+    <Wrapper>
       <StarshipTitle>{starship.name}</StarshipTitle>
 
 
@@ -60,6 +76,6 @@ export const renderStarship = (
             : [{ label: 'None' }]
         }
       />
-    </div>
+    </Wrapper>
   );
 };

@@ -41,6 +41,20 @@ const ArrowIcon = styled.img`
   height: 20px;
 `;
 
+const Wrapper = styled.div`
+  width: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+  margin: 0 150px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  }
+`;
 
 type RelatedData = {
   homeworld?: { name: string; id: string }
@@ -54,7 +68,7 @@ export const renderPerson = (
 ) => {
 
 return (
-  <div>
+  <Wrapper>
     <PersonTitle>{person.name}</PersonTitle>
     <ImageContainer>
       <Avatar src={person.image} alt={person.name} />
@@ -79,7 +93,7 @@ return (
                 : [{ label: 'Unknown'}]}
     />
       
-  </div>
+  </Wrapper>
 )
   
 

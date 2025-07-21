@@ -7,6 +7,22 @@ type RelatedData = {
   residents?: { name: string; id: string }[];
 };
 
+const Wrapper = styled.div`
+  width: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+  margin: 0 150px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  }
+`;
+
+
 const PlanetTitle = styled.h1`
   margin-bottom: 40px;
 `;
@@ -32,7 +48,7 @@ export const renderPlanet = (
   const { name, climate, terrain, gravity, population } = planet;
 
   return (
-    <div>
+    <Wrapper>
       <PlanetTitle>{name}</PlanetTitle>
 
       {/* <ImageContainer>
@@ -52,6 +68,6 @@ export const renderPlanet = (
             : [{ label: 'Unknown' }]
         }
       />
-    </div>
+    </Wrapper>
   );
 };
