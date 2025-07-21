@@ -2,6 +2,27 @@ import type { Person } from '../types/swapi'
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter'
 import { Link } from 'react-router-dom'
 import { extractIdFromUrl } from '../utils/extractId'
+import { SafeImage } from '../components/SafeImage'
+import styled from 'styled-components'
+
+const Avatar = styled(SafeImage)`
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const PersonTitle = styled.h1`
+
+  margin-bottom: 40px;
+
+`
 
 
 type RelatedData = {
@@ -17,7 +38,10 @@ export const renderPerson = (
 
 return (
   <div>
-    <h1>{person.name}</h1>
+    <PersonTitle>{person.name}</PersonTitle>
+    <ImageContainer>
+      <Avatar src={person.image} alt={person.name} />
+    </ImageContainer>
     <ul>
       <li><strong>Birth Year:</strong> {person.birth_year}</li>
       <li><strong>Gender:</strong> {capitalizeFirstLetter(person.gender)}</li>

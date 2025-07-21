@@ -129,7 +129,7 @@ const HomePage = () => {
 
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null)
 
-  console.log(selectedPersonId)
+ 
 
   useEffect(() => {
     usePersonStore.getState().reset();

@@ -5,7 +5,7 @@ import EntityPage from '../EntityPage'
 import { renderPerson } from '../../renderers/renderPerson'
 
 const PersonPage = ({ id }: {id: string}) => {
-  console.log({id}, 'person page')
+ 
   return (
     <EntityPage
       id={id}
