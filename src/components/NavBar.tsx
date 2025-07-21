@@ -17,6 +17,7 @@ const Nav = styled.nav`
 
   @media (min-width: 768px) {
     justify-content: flex-start;
+    padding: 1rem 115px;
   }
 `;
 

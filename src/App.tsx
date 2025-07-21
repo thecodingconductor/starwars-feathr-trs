@@ -47,7 +47,7 @@ function App() {
                   onOpenChange={open => {
                     if (!open) {
                       useModalStore.getState().clearBackgroundLocation();
-                      navigate('/');
+                      void navigate('/');
                     }
                   }}
                 >
@@ -64,7 +64,7 @@ function App() {
                   onOpenChange={open => {
                     if (!open) {
                       useModalStore.getState().clearBackgroundLocation();
-                      navigate('/');
+                      void navigate('/');
                     }
                   }}
                 >
@@ -81,7 +81,7 @@ function App() {
                   onOpenChange={open => {
                     if (!open) {
                       useModalStore.getState().clearBackgroundLocation();
-                      navigate('/');
+                      void navigate('/');
                     }
                   }}
                 >

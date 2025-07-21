@@ -70,6 +70,10 @@ const PageBackground = styled.div`
   background: linear-gradient(180deg, #71405a 0%, #35394a 79.33%, #3f4957 99.52%);
   padding: 1.5rem;
   padding-top: 60px;
+
+  @media (min-width: 768px) {
+    padding: 115px;
+  }
 `;
 
 const Hero = styled.div`
@@ -182,8 +186,8 @@ const HomePage = () => {
 
   useEffect(() => {
     usePersonStore.getState().reset();
-    fetchPeople().then(setPeople);
-  }, []);
+    fetchPeople().then(setPeople).catch(err => console.error(err))
+  }, [setPeople]);
 
   // Pagination Logic
   const [page, setPage] = useState(1);
