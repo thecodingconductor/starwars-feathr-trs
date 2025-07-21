@@ -1,11 +1,8 @@
 import type { Person } from '../types/swapi';
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
-import { Link } from 'react-router-dom';
-import { extractIdFromUrl } from '../utils/extractId';
 import { SafeImage } from '../components/SafeImage';
 import styled from 'styled-components';
 import { DetailListItem } from '../components/DetailListItem';
-import { PillLinkItem } from '../components/PillLinkItem';
 
 const Avatar = styled(SafeImage)`
   width: 130px;

@@ -1,7 +1,6 @@
 import type { Starship } from '../types/swapi';
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
 import { DetailListItem } from '../components/DetailListItem';
-import { SafeImage } from '../components/SafeImage';
 import styled from 'styled-components';
 
 type RelatedData = {
@@ -26,20 +25,6 @@ const Wrapper = styled.div`
     align-items: flex-start;
     justify-content: flex-start;
   }
-`;
-
-const ImageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const StarshipImage = styled(SafeImage)`
-  width: 130px;
-  height: 130px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 0.5rem;
 `;
 
 export const renderStarship = (starship: Starship, related: RelatedData) => {

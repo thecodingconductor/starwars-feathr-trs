@@ -8,8 +8,6 @@ import styled, { keyframes } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CharacterCard } from '../components/CharacterCard';
 import { Pagination } from '../components/Pagniation';
-import { EntityModal } from '../components/EntityModal';
-import PersonPage from './people/PersonPage';
 
 const fadeVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -181,7 +179,6 @@ const HomePage = () => {
 
   const people = filterAndSort(data, query, 'name');
 
-  const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
 
   useEffect(() => {
     usePersonStore.getState().reset();
