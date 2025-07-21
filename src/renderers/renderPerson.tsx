@@ -21,18 +21,6 @@ const PersonTitle = styled.h1`
   margin-bottom: 40px;
 `;
 
-const DataDescription = styled.p`
-  color: #fff;
-  font-family: ${({ theme }) => theme.headingFont};
-  text-decoration: underline;
-  text-transform: uppercase;
-`;
-
-const ArrowIcon = styled.img`
-  width: 20px;
-  height: 20px;
-`;
-
 const Wrapper = styled.div`
   width: 100%;
 
@@ -86,7 +74,7 @@ export const renderPerson = (person: Person, related: RelatedData) => {
         title="Starships"
         multiItems={
           Array.isArray(related.starships)
-            ? related.starships.map((s, i) => ({ label: s.name, to: `/starships/${s.id}` }))
+            ? related.starships.map((s) => ({ label: s.name, to: `/starships/${s.id}` }))
             : [{ label: 'Unknown' }]
         }
       />

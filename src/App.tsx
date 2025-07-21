@@ -22,8 +22,6 @@ function App() {
   const location = useLocation();
   const backgroundLocation = useModalStore(s => s.backgroundLocation);
 
-  const toggleTheme = () => setIsDarkMode(prev => !prev);
-
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <GlobalStyle />
