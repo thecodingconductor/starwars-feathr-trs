@@ -1,44 +1,65 @@
-import type { Starship } from "../types/swapi";
-import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
-import { Link } from "react-router-dom";
+import type { Starship } from '../types/swapi';
+import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
+import { DetailListItem } from '../components/DetailListItem';
+import { SafeImage } from '../components/SafeImage';
+import styled from 'styled-components';
 
 type RelatedData = {
-    pilots?: {name: string, id: string}[],
-    films?: {name: string, id: string}[]
-}
+  pilots?: { name: string; id: string }[];
+  films?: { name: string; id: string }[];
+};
+
+const StarshipTitle = styled.h1`
+  margin-bottom: 40px;
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StarshipImage = styled(SafeImage)`
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+`;
 
 export const renderStarship = (
-    starship: Starship,
-    related: RelatedData
-) => (
-
+  starship: Starship,
+  related: RelatedData
+) => {
+  return (
     <div>
-        <h1>{starship.name}</h1>
-        <ul>
-        <li><strong>Model:</strong> {starship.model}</li>
-        <li><strong>Manufacturer:</strong> {starship.manufacturer}</li>
-        <li><strong>Starship Class:</strong> {capitalizeFirstLetter(starship.starship_class)}</li>
-        <li><strong>Hyperdrive Rating:</strong> {starship.hyperdrive_rating}</li>
-        <li><strong>Crew:</strong> {starship.crew}</li>
-        <li><strong>Passengers:</strong> {starship.passengers}</li>
-        <li>
-            <strong>Pilots: </strong> 
+      <StarshipTitle>{starship.name}</StarshipTitle>
 
-            {Array.isArray(related.pilots)
-                ? related.pilots.map((s, i) => (
-                  <Link key={s.id} to={`/people/${s.id}`}>
-                        <span>
-                            {i > 0 && ", "}
-                            {s.name}
-                        </span>
-                  </Link>
-                    
-                )) : "Unknown"
-            }
-            
-           
-        </li>
-        <li><strong>Films:</strong> {related.films?.join(', ') || 'None'}</li>
-        </ul>
+
+      <DetailListItem title="Model" singleItem={{ label: starship.model || 'Unknown' }} />
+      <DetailListItem title="Manufacturer" singleItem={{ label: starship.manufacturer || 'Unknown' }} />
+      <DetailListItem title="Starship Class" singleItem={{ label: capitalizeFirstLetter(starship.starship_class) }} />
+      <DetailListItem title="Hyperdrive Rating" singleItem={{ label: starship.hyperdrive_rating || 'Unknown' }} />
+      <DetailListItem title="Crew" singleItem={{ label: starship.crew || 'Unknown' }} />
+      <DetailListItem title="Passengers" singleItem={{ label: starship.passengers || 'Unknown' }} />
+
+      <DetailListItem
+        title="Pilots"
+        multiItems={
+          Array.isArray(related.pilots) && related.pilots.length > 0
+            ? related.pilots.map((p) => ({ label: p.name, to: `/people/${p.id}` }))
+            : [{ label: 'Unknown' }]
+        }
+      />
+
+      <DetailListItem
+        title="Films"
+        multiItems={
+          Array.isArray(related.films) && related.films.length > 0
+            ? related.films.map((f) => ({ label: f.name }))
+            : [{ label: 'None' }]
+        }
+      />
     </div>
-)
+  );
+};

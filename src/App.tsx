@@ -80,6 +80,23 @@ function App() {
                       </EntityModal>
                     }
                   />
+
+                  <Route
+                    path="/starships/:id"
+                    element={
+                      <EntityModal
+                        open
+                        onOpenChange={(open) => {
+                          if (!open) {
+                            useModalStore.getState().clearBackgroundLocation();
+                            navigate('/');
+                          }
+                        }}
+                      >
+                        <StarshipPage />
+                      </EntityModal>
+                    }
+                  />
                 </Routes>
           )}
       </Suspense>
