@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { Link, useLocation } from 'react-router-dom';
+import styled, { css }  from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useState } from 'react';
 
@@ -20,15 +20,21 @@ const Nav = styled.nav`
   }
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(Link)<{ $active?: boolean }>`
   color: white;
   text-decoration: none;
   font-weight: bold;
   font-family: ${({ theme }) => theme.headingFont};
 
-  &:hover {
-    text-decoration: underline;
-  }
+  ${({ $active }) =>
+    $active &&
+    css`
+      text-shadow: 0px 4px 28px #91EDFF;
+    `}
+
+    &:hover {
+      text-decoration: none;
+    }
 `;
 
 const DesktopLinks = styled.div`
@@ -86,13 +92,15 @@ const CloseButton = styled(Dialog.Close)`
 
 const NavBar = () => {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+   const currentPath = location.pathname;
   return (
     <Nav>
       <DesktopLinks>
-        <StyledLink to="/">Home</StyledLink>
-        <StyledLink to="/planets">Planets</StyledLink>
-        <StyledLink to="/starships">Starships</StyledLink>
-        <StyledLink to="/people">People</StyledLink>
+        <StyledLink $active={currentPath === '/'} to="/">Home</StyledLink>
+        <StyledLink to="/planets" $active={currentPath === '/planets'}>Planets</StyledLink>
+        <StyledLink to="/starships" $active={currentPath === '/planets'}>Starships</StyledLink>
+       
       </DesktopLinks>
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <MobileMenuButton asChild>
