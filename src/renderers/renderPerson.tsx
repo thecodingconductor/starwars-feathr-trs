@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom'
 import { extractIdFromUrl } from '../utils/extractId'
 import { SafeImage } from '../components/SafeImage'
 import styled from 'styled-components'
+import { DetailListItem } from '../components/DetailListItem'
+import { PillLinkItem } from '../components/PillLinkItem'
+
+
+
 
 const Avatar = styled(SafeImage)`
   width: 130px;
@@ -24,6 +29,18 @@ const PersonTitle = styled.h1`
 
 `
 
+const DataDescription = styled.p`
+  color: #fff;
+  font-family: ${({theme}) => theme.headingFont};
+  text-decoration: underline;
+  text-transform: uppercase;
+`
+
+const ArrowIcon = styled.img`
+  width: 20px;
+  height: 20px;
+`;
+
 
 type RelatedData = {
   homeworld?: { name: string; id: string }
@@ -42,44 +59,26 @@ return (
     <ImageContainer>
       <Avatar src={person.image} alt={person.name} />
     </ImageContainer>
-    <ul>
-      <li><strong>Birth Year:</strong> {person.birth_year}</li>
-      <li><strong>Gender:</strong> {capitalizeFirstLetter(person.gender)}</li>
-      <li>
-        <Link to={`/planets/${related.homeworld?.id}`}>
-          <strong>Homeworld:</strong> {related.homeworld?.name || "Unknown"}
-        </Link>
-        
-      </li>
-      <li>
-          <strong>Species:</strong>{" "}
-          {Array.isArray(related.species)
-            ? related.species.map((s, i) => (
-                <span key={s.id}>
-                  {i > 0 && ", "}
-                  {s.name}
-                </span>
-              ))
-            : "Unknown"}
-        </li>
-        <li>
-          
-              <strong>Starships: </strong>{" "}
-              {Array.isArray(related.starships)
-                ? related.starships.map((s, i) => (
-                  <Link key={s.id} to={`/starships/${s.id}`}>
-                     <span >
-                      {i > 0 && ", "}
-                      {s.name}
-                    </span>
-                  </Link>
-                   
-                  ))
-                : "Unknown"}
-          
-          
-        </li>
-    </ul>
+    <DetailListItem title="Birth Year" singleItem={{ label: person.birth_year }} />
+
+    <DetailListItem title="Gender" singleItem={{ label: capitalizeFirstLetter(person.gender)}}/>
+
+    <DetailListItem title="Homeworld" singleItem={{label : related.homeworld?.name || "Unknown", to: `/planets/${related.homeworld?.id}`}} />
+
+    <DetailListItem
+        title="Species"
+        multiItems={Array.isArray(related.species) && related.species.length > 0
+      ? related.species.map((s) => ({ label: s.name }))
+      : [{ label: 'Unknown' }]}
+      />
+
+    <DetailListItem
+      title="Starships"
+      multiItems={Array.isArray(related.starships)
+                ? related.starships.map((s, i) => ({ label: s.name, to: `/starships/${s.id}` }))
+                : [{ label: 'Unknown'}]}
+    />
+      
   </div>
 )
   
