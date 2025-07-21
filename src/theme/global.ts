@@ -1,5 +1,5 @@
 // styles/GlobalStyle.ts
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -60,6 +60,6 @@ const GlobalStyle = createGlobalStyle`
       cursor: not-allowed;
     }
   }
-`
+`;
 
-export default GlobalStyle
+export default GlobalStyle;

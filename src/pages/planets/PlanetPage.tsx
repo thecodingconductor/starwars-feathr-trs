@@ -1,9 +1,9 @@
-import EntityPage from '../EntityPage'
-import { fetchPlanet } from '../../api/swapi'
-import { usePlanetStore } from '../../store/usePlanetStore'
-import { extractRelatedPlanetData } from '../../utils/extractRelatedPlanetData'
-import { renderPlanet } from '../../renderers/renderPlanets'
-import { useParams } from 'react-router-dom'
+import EntityPage from '../EntityPage';
+import { fetchPlanet } from '../../api/swapi';
+import { usePlanetStore } from '../../store/usePlanetStore';
+import { extractRelatedPlanetData } from '../../utils/extractRelatedPlanetData';
+import { renderPlanet } from '../../renderers/renderPlanets';
+import { useParams } from 'react-router-dom';
 
 const PlanetPage = () => {
   const { id } = useParams();
@@ -16,7 +16,7 @@ const PlanetPage = () => {
       extractRelated={extractRelatedPlanetData}
       render={renderPlanet}
     />
-  )
-}
+  );
+};
 
-export default PlanetPage
+export default PlanetPage;

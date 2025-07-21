@@ -1,6 +1,6 @@
-import * as Dialog from '@radix-ui/react-dialog'
-import styled from 'styled-components'
-import type { ReactNode } from 'react'
+import * as Dialog from '@radix-ui/react-dialog';
+import styled from 'styled-components';
+import type { ReactNode } from 'react';
 
 const Overlay = styled(Dialog.Overlay)`
   position: fixed;
@@ -40,9 +40,9 @@ const Close = styled(Dialog.Close)`
 `;
 
 interface EntityModalProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  children: ReactNode
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  children: ReactNode;
 }
 
 export const EntityModal = ({ open, onOpenChange, children }: EntityModalProps) => (
@@ -56,4 +56,4 @@ export const EntityModal = ({ open, onOpenChange, children }: EntityModalProps) 
       </Overlay>
     </Dialog.Portal>
   </Dialog.Root>
-)
+);

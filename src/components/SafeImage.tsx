@@ -10,7 +10,15 @@ const StyledImg = styled.img`
 
 const fallback = '/fallback.jpg';
 
-export const SafeImage = ({ src, alt, className }: { src: string; alt: string, className?: string }) => {
+export const SafeImage = ({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) => {
   const [error, setError] = useState(false);
 
   return (

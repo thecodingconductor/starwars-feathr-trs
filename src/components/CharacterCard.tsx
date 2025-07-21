@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { SafeImage } from './SafeImage';
 
 const Card = styled.div`
@@ -10,7 +10,7 @@ const Card = styled.div`
   text-align: center;
   transition: box-shadow 0.2s;
   &:hover {
-    box-shadow: 0 2px 16px 0 rgba(60,60,120,0.18);
+    box-shadow: 0 2px 16px 0 rgba(60, 60, 120, 0.18);
   }
 `;
 
@@ -36,8 +36,7 @@ interface CharacterCardProps {
   };
 }
 
-export const CharacterCard = ({ person }: CharacterCardProps ) => {
-  
+export const CharacterCard = ({ person }: CharacterCardProps) => {
   return (
     <div style={{ cursor: 'pointer' }}>
       <Card>

@@ -3,15 +3,16 @@ interface EntityWithUrl {
   [key: string]: any;
 }
 
-
 export function filterAndSort<T extends EntityWithUrl>(
   data: T[],
   query: string,
   sortKey: keyof T
 ): T[] {
   return data
-    .filter((item) =>
-      String(item.name || item.title).toLowerCase().includes(query.toLowerCase())
+    .filter(item =>
+      String(item.name || item.title)
+        .toLowerCase()
+        .includes(query.toLowerCase())
     )
     .sort((a, b) => {
       const aVal = a[sortKey];

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from 'styled-components';
 
 const StopButton = styled.button`
   position: fixed;
@@ -18,4 +18,4 @@ const StopButton = styled.button`
   &:hover {
     background: #d9363e;
   }
-`
+`;

@@ -1,5 +1,4 @@
-import type { Starship } from "../types/swapi";
-import { createEntityStore } from "./createEntityStore";
+import type { Starship } from '../types/swapi';
+import { createEntityStore } from './createEntityStore';
 
-export const useStarshipStore = createEntityStore<Starship>('name', 'starship-store')
-
+export const useStarshipStore = createEntityStore<Starship>('name', 'starship-store');

@@ -1,11 +1,11 @@
 export interface Theme {
-  background: string
-  text: string
-  link: string
-  accent: string
-  card: string
-  fontFamily: string
-  headingFont: string
+  background: string;
+  text: string;
+  link: string;
+  accent: string;
+  card: string;
+  fontFamily: string;
+  headingFont: string;
 }
 
 export const lightTheme: Theme = {
@@ -16,7 +16,7 @@ export const lightTheme: Theme = {
   card: '#ffffff',
   fontFamily: `'Inter', system-ui, sans-serif`,
   headingFont: `'Orbitron', sans-serif`,
-}
+};
 
 export const darkTheme: Theme = {
   background: '#111',
@@ -26,4 +26,4 @@ export const darkTheme: Theme = {
   card: '#1f1f1f',
   fontFamily: `'Inter', system-ui, sans-serif`,
   headingFont: `'Orbitron', sans-serif`,
-}
+};

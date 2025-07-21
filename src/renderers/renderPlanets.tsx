@@ -9,19 +9,18 @@ type RelatedData = {
 
 const Wrapper = styled.div`
   width: 100%;
-  
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
   @media (min-width: 768px) {
-  margin: 0 150px;
-  align-items: flex-start;
-  justify-content: flex-start;
+    margin: 0 150px;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 `;
-
 
 const PlanetTitle = styled.h1`
   margin-bottom: 40px;
@@ -41,10 +40,7 @@ const PlanetImage = styled(SafeImage)`
   margin-bottom: 0.5rem;
 `;
 
-export const renderPlanet = (
-  planet: Planet,
-  related: RelatedData
-) => {
+export const renderPlanet = (planet: Planet, related: RelatedData) => {
   const { name, climate, terrain, gravity, population } = planet;
 
   return (
@@ -64,7 +60,7 @@ export const renderPlanet = (
         title="Residents"
         multiItems={
           Array.isArray(related.residents) && related.residents.length > 0
-            ? related.residents.map((r) => ({ label: r.name, to: `/people/${r.id}` }))
+            ? related.residents.map(r => ({ label: r.name, to: `/people/${r.id}` }))
             : [{ label: 'Unknown' }]
         }
       />

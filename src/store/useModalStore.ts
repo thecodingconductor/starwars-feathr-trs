@@ -7,8 +7,8 @@ interface ModalState {
   clearBackgroundLocation: () => void;
 }
 
-export const useModalStore = create<ModalState>((set) => ({
+export const useModalStore = create<ModalState>(set => ({
   backgroundLocation: null,
-  setBackgroundLocation: (loc) => set({ backgroundLocation: loc }),
+  setBackgroundLocation: loc => set({ backgroundLocation: loc }),
   clearBackgroundLocation: () => set({ backgroundLocation: null }),
 }));

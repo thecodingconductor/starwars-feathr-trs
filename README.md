@@ -1,10 +1,11 @@
 # starwars-feathr-trs
+
 Tristan Rais-Sherman Feathr Takehome Project
 
 # Tech Stack
 
 - React.js
-- TypeScript 
+- TypeScript
 - CSS3, HTML5
 - Zustand
 - Styled Components
@@ -23,7 +24,7 @@ Any time I start a new project, I use it as an opporunity to improve, challenge 
 - Zustand
   I have never used Zustand in a project, so this was a great opportunity to try it out to manage app state.
 - Abstraction
-  As I got further into building out the application, and writing logic to manage fetching People, Planets, and Starships, adding filtering and sorting capabilities, I discvored I was rewriting a lot of similar code. 
+  As I got further into building out the application, and writing logic to manage fetching People, Planets, and Starships, adding filtering and sorting capabilities, I discvored I was rewriting a lot of similar code.
 
   Each page in this app did similar things for each Entity type. So I thought to make a generic EntityPage, and a generic EntityStore, to follow DRY principles.
 
@@ -71,15 +72,15 @@ export default tseslint.config([
       // other options...
     },
   },
-])
+]);
 ```
 
 You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
 ```js
 // eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+import reactX from 'eslint-plugin-react-x';
+import reactDom from 'eslint-plugin-react-dom';
 
 export default tseslint.config([
   globalIgnores(['dist']),
@@ -100,5 +101,5 @@ export default tseslint.config([
       // other options...
     },
   },
-])
+]);
 ```

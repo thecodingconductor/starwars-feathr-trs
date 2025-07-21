@@ -1,12 +1,12 @@
-import { usePersonStore } from '../../store/usePersonStore'
-import { fetchPerson } from '../../api/swapi'
-import { extractRelatedPersonData } from '../../utils/extractRelatedPersonData'
-import EntityPage from '../EntityPage'
-import { renderPerson } from '../../renderers/renderPerson'
-import { useParams } from 'react-router-dom'
+import { usePersonStore } from '../../store/usePersonStore';
+import { fetchPerson } from '../../api/swapi';
+import { extractRelatedPersonData } from '../../utils/extractRelatedPersonData';
+import EntityPage from '../EntityPage';
+import { renderPerson } from '../../renderers/renderPerson';
+import { useParams } from 'react-router-dom';
 
 const PersonPage = () => {
- const { id } = useParams();
+  const { id } = useParams();
   if (!id) return null;
   return (
     <EntityPage
@@ -16,7 +16,7 @@ const PersonPage = () => {
       extractRelated={extractRelatedPersonData}
       render={renderPerson}
     />
-  )
-}
+  );
+};
 
-export default PersonPage
+export default PersonPage;

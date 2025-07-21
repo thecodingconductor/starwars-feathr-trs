@@ -1,28 +1,27 @@
 // src/types/swapi.ts
 
 export interface Film {
-  title: string
-  episode_id: number
-  opening_crawl: string
-  director: string
-  producer: string
-  release_date: string
-  characters: string[]    
-  planets: string[]       
-  starships: string[]     
-  vehicles: string[]     
-  species: string[]      
-  created: string       
-  edited: string         
-  url: string             
+  title: string;
+  episode_id: number;
+  opening_crawl: string;
+  director: string;
+  producer: string;
+  release_date: string;
+  characters: string[];
+  planets: string[];
+  starships: string[];
+  vehicles: string[];
+  species: string[];
+  created: string;
+  edited: string;
+  url: string;
 }
 
-
 export interface FilmResponse {
-  count: number
-  next: string | null
-  previous: string | null
-  results: Film[]
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Film[];
 }
 
 // Zustand FilmStore Type.
@@ -64,7 +63,6 @@ export type PersonStore = {
   getPersonById: (id: string | number) => Person | undefined;
 };
 
-
 export interface Planet {
   name: string;
   rotation_period: string;
@@ -96,8 +94,7 @@ export interface Starship {
   hyperdrive_rating: string;
   MGLT: string;
   starship_class: string;
-  pilots: string[];  
-  films: string[]; 
+  pilots: string[];
+  films: string[];
   url: string;
 }
-

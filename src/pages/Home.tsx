@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useModalStore } from '../store/useModalStore';
-import { fetchPeople } from "../api/swapi"
-import { usePersonStore } from '../store/usePersonStore'
-import { filterAndSort } from "../utils/filterAndSort";
-import styled, { keyframes } from "styled-components";
+import { fetchPeople } from '../api/swapi';
+import { usePersonStore } from '../store/usePersonStore';
+import { filterAndSort } from '../utils/filterAndSort';
+import styled, { keyframes } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CharacterCard } from "../components/CharacterCard";
-import { Pagination } from "../components/Pagniation";
-import { EntityModal } from "../components/EntityModal";
-import PersonPage from "./people/PersonPage";
-
+import { CharacterCard } from '../components/CharacterCard';
+import { Pagination } from '../components/Pagniation';
+import { EntityModal } from '../components/EntityModal';
+import PersonPage from './people/PersonPage';
 
 const fadeVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -70,7 +69,7 @@ const MoonsWrapper = styled.div`
 
 const PageBackground = styled.div`
   min-height: 100vh;
-  background: linear-gradient(180deg, #71405A 0%, #35394A 79.33%, #3F4957 99.52%);
+  background: linear-gradient(180deg, #71405a 0%, #35394a 79.33%, #3f4957 99.52%);
   padding: 1.5rem;
   padding-top: 60px;
 `;
@@ -94,22 +93,21 @@ const HeroContent = styled.div`
     align-items: flex-start;
     text-align: left;
   }
-`
+`;
 
 const Logo = styled.img`
   width: 240px;
   margin-bottom: 1.5rem;
 
   @media (min-width: 768px) {
-   width: 560px;
+    width: 560px;
   }
-
 `;
 
 const HeroTitle = styled.h1`
   color: white;
   font-size: 1.5rem;
-  font-family: ${({theme}) => theme.fontFamily}
+  font-family: ${({ theme }) => theme.fontFamily}
   max-width: 360px;
   margin-bottom: 1.5rem;
 `;
@@ -125,7 +123,7 @@ const SearchBar = styled.input`
   color: #fff;
 
   &::placeholder {
-    font-family: ${({theme}) => theme.headingFont};
+    font-family: ${({ theme }) => theme.headingFont};
     color: #fff;
   }
 `;
@@ -174,18 +172,16 @@ const HomePage = () => {
   // Zustand State
 
   const location = useLocation();
-  const setLocationBackground = useModalStore((s) => s.setBackgroundLocation)
+  const setLocationBackground = useModalStore(s => s.setBackgroundLocation);
 
-  const data = usePersonStore((s) => s.data);
-  const query = usePersonStore((s) => s.query);
-  const setQuery = usePersonStore((s) => s.setQuery);
-  const setPeople = usePersonStore((s) => s.setData);
+  const data = usePersonStore(s => s.data);
+  const query = usePersonStore(s => s.query);
+  const setQuery = usePersonStore(s => s.setQuery);
+  const setPeople = usePersonStore(s => s.setData);
 
   const people = filterAndSort(data, query, 'name');
 
-  const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null)
-
- 
+  const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
 
   useEffect(() => {
     usePersonStore.getState().reset();
@@ -214,9 +210,9 @@ const HomePage = () => {
           >
             <Hero>
               <MoonsWrapper>
-            <MoonOne />
-            <MoonTwo />
-          </MoonsWrapper>
+                <MoonOne />
+                <MoonTwo />
+              </MoonsWrapper>
               <HeroContent>
                 <Logo src="/logo-lockup.png" alt="Star Wars Explorer Logo" />
                 <HeroTitle>
@@ -232,7 +228,7 @@ const HomePage = () => {
         <SearchBar
           type="text"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={e => setQuery(e.target.value)}
           placeholder="Use the force..."
         />
       </SearchWrapper>
@@ -252,17 +248,18 @@ const HomePage = () => {
                 <Pagination
                   page={page}
                   totalPages={totalPages}
-                  onPrev={() => setPage((p) => p - 1)}
-                  onNext={() => setPage((p) => p + 1)}
+                  onPrev={() => setPage(p => p - 1)}
+                  onNext={() => setPage(p => p + 1)}
                 />
                 <Grid>
-                  {paginated.map((person) => (
-                    <Link  key={person.url}  to={`/people/${person.url.split('/').at(-1)}`} onClick={() => setLocationBackground(location)}>
-                       <CharacterCard 
-                          person={person} 
-                         />
+                  {paginated.map(person => (
+                    <Link
+                      key={person.url}
+                      to={`/people/${person.url.split('/').at(-1)}`}
+                      onClick={() => setLocationBackground(location)}
+                    >
+                      <CharacterCard person={person} />
                     </Link>
-                   
                   ))}
                 </Grid>
               </>
@@ -281,11 +278,14 @@ const HomePage = () => {
             <PopularContainer>
               <SearchResultsTitle>POPULAR CHARACTERS</SearchResultsTitle>
               <Grid>
-                {popularCharacters.map((person) => (
-                  <Link  key={person.url}  to={`/people/${person.url.split('/').at(-1)}`} onClick={() => setLocationBackground(location)}>
+                {popularCharacters.map(person => (
+                  <Link
+                    key={person.url}
+                    to={`/people/${person.url.split('/').at(-1)}`}
+                    onClick={() => setLocationBackground(location)}
+                  >
                     <CharacterCard person={person} />
                   </Link>
-                  
                 ))}
               </Grid>
             </PopularContainer>

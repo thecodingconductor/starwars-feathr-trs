@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import * as Dialog from '@radix-ui/react-dialog'
-import { useState } from 'react'
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import * as Dialog from '@radix-ui/react-dialog';
+import { useState } from 'react';
 
 const Nav = styled.nav`
   position: fixed;
@@ -18,8 +18,7 @@ const Nav = styled.nav`
   @media (min-width: 768px) {
     justify-content: flex-start;
   }
-
-`
+`;
 
 const StyledLink = styled(Link)`
   color: white;
@@ -30,7 +29,7 @@ const StyledLink = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
-`
+`;
 
 const DesktopLinks = styled.div`
   display: flex;
@@ -38,7 +37,7 @@ const DesktopLinks = styled.div`
   @media (max-width: 700px) {
     display: none;
   }
-`
+`;
 
 const MobileMenuButton = styled(Dialog.Trigger)`
   display: none;
@@ -53,15 +52,14 @@ const MobileMenuButton = styled(Dialog.Trigger)`
     display: block;
     margin: 0 auto;
   }
-`
-
+`;
 
 const Overlay = styled(Dialog.Overlay)`
-  background: rgba(0,0,0,0.85);
+  background: rgba(0, 0, 0, 0.85);
   position: fixed;
   inset: 0;
   z-index: 1000;
-`
+`;
 
 const MenuContent = styled(Dialog.Content)`
   position: fixed;
@@ -73,7 +71,7 @@ const MenuContent = styled(Dialog.Content)`
   justify-content: center;
   gap: 2rem;
   z-index: 1001;
-`
+`;
 
 const CloseButton = styled(Dialog.Close)`
   position: absolute;
@@ -84,10 +82,10 @@ const CloseButton = styled(Dialog.Close)`
   color: white;
   font-size: 2rem;
   cursor: pointer;
-`
+`;
 
 const NavBar = () => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   return (
     <Nav>
       <DesktopLinks>
@@ -103,14 +101,22 @@ const NavBar = () => {
         <Overlay />
         <MenuContent>
           <CloseButton aria-label="Close menu">&times;</CloseButton>
-          <StyledLink to="/" onClick={() => setOpen(false)}>Home</StyledLink>
-          <StyledLink to="/planets" onClick={() => setOpen(false)}>Planets</StyledLink>
-          <StyledLink to="/starships" onClick={() => setOpen(false)}>Starships</StyledLink>
-          <StyledLink to="/people" onClick={() => setOpen(false)}>People</StyledLink>
+          <StyledLink to="/" onClick={() => setOpen(false)}>
+            Home
+          </StyledLink>
+          <StyledLink to="/planets" onClick={() => setOpen(false)}>
+            Planets
+          </StyledLink>
+          <StyledLink to="/starships" onClick={() => setOpen(false)}>
+            Starships
+          </StyledLink>
+          <StyledLink to="/people" onClick={() => setOpen(false)}>
+            People
+          </StyledLink>
         </MenuContent>
       </Dialog.Root>
     </Nav>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;
