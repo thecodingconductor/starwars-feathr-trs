@@ -203,7 +203,7 @@ const HomePage = () => {
                 />
                 <Grid>
                   {paginated.map((person) => (
-                    <Link  key={person.url}  to={`/person/${person.url.split('/').at(-1)}`} onClick={() => setLocationBackground(location)}>
+                    <Link  key={person.url}  to={`/people/${person.url.split('/').at(-1)}`} onClick={() => setLocationBackground(location)}>
                        <CharacterCard 
                           person={person} 
                          />
@@ -211,13 +211,6 @@ const HomePage = () => {
                    
                   ))}
                 </Grid>
-               
-                  {/* <EntityModal
-                    open={!!selectedPersonId}
-                    onOpenChange={open => !open && setSelectedPersonId(null)}
-                  >
-                    {selectedPersonId && <PersonPage id={selectedPersonId} />}
-                  </EntityModal> */}
               </>
             ) : (
               <EmptyResults>No results found.</EmptyResults>
@@ -235,7 +228,7 @@ const HomePage = () => {
               <SearchResultsTitle>POPULAR CHARACTERS</SearchResultsTitle>
               <Grid>
                 {popularCharacters.map((person) => (
-                  <Link  key={person.url}  to={`/person/${person.url.split('/').at(-1)}`} onClick={() => setLocationBackground(location)}>
+                  <Link  key={person.url}  to={`/people/${person.url.split('/').at(-1)}`} onClick={() => setLocationBackground(location)}>
                     <CharacterCard person={person} />
                   </Link>
                   

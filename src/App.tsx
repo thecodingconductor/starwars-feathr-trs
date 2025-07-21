@@ -33,7 +33,7 @@ function App() {
         <Routes location={backgroundLocation || location}>
           <Route element={<Layout /> }>
             <Route path="/" element={<Home />}/>
-            {/* <Route path={'/people/:id'} element={<PersonPage />} /> */}
+            <Route path={'/people/:id'} element={<PersonPage />} />
             <Route path={'/films/:id'} element={<FilmPage />}/>
 
             <Route path={'/planets'} element={<Planets />}/>
@@ -46,24 +46,41 @@ function App() {
         </Routes>
 
               {backgroundLocation && (
-            <Routes>
-              <Route
-                path="/person/:id"
-                element={
-                  <EntityModal
-                    open
-                    onOpenChange={(open) => {
-                      if (!open) {
-                        useModalStore.getState().clearBackgroundLocation();
-                        navigate(-1);
-                      }
-                    }}
-                  >
-                    <PersonPage />
-                  </EntityModal>
-                }
-              />
-            </Routes>
+                <Routes>
+                  <Route
+                    path="/people/:id"
+                    element={
+                      <EntityModal
+                        open
+                        onOpenChange={(open) => {
+                          if (!open) {
+                            useModalStore.getState().clearBackgroundLocation();
+                            navigate(-1);
+                          }
+                        }}
+                      >
+                        <PersonPage />
+                      </EntityModal>
+                    }
+                  />
+
+                  <Route
+                    path="/planets/:id"
+                    element={
+                      <EntityModal
+                        open
+                        onOpenChange={(open) => {
+                          if (!open) {
+                            useModalStore.getState().clearBackgroundLocation();
+                            navigate('/');
+                          }
+                        }}
+                      >
+                        <PlanetPage />
+                      </EntityModal>
+                    }
+                  />
+                </Routes>
           )}
       </Suspense>
     </ThemeProvider>
