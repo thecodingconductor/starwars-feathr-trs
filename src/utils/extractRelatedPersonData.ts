@@ -1,5 +1,5 @@
-import type { Person } from '../types/swapi';
-import { extractIdFromUrl } from './extractId';
+import type { Person } from "../types/swapi";
+import { extractIdFromUrl } from "./extractId";
 
 type RelatedItem = {
   name: string;
@@ -17,14 +17,17 @@ type SWAPIEntity = {
   name?: string;
 };
 
-const fetchRelatedItem = async (url: string, fallbackName = 'Unknown'): Promise<RelatedItem> => {
-  const id = extractIdFromUrl(url) ?? 'unknown';
+const fetchRelatedItem = async (
+  url: string,
+  fallbackName = "Unknown",
+): Promise<RelatedItem> => {
+  const id = extractIdFromUrl(url) ?? "unknown";
 
   try {
     const res = await fetch(url);
     const data: unknown = await res.json();
 
-    if (typeof data === 'object' && data !== null && 'name' in data) {
+    if (typeof data === "object" && data !== null && "name" in data) {
       return {
         name: (data as SWAPIEntity).name ?? fallbackName,
         url,
@@ -43,7 +46,7 @@ const fetchRelatedItem = async (url: string, fallbackName = 'Unknown'): Promise<
 };
 
 export const extractRelatedPersonData = async (
-  person: Person
+  person: Person,
 ): Promise<RelatedPersonData> => {
   const result: RelatedPersonData = {
     species: [],
@@ -58,15 +61,15 @@ export const extractRelatedPersonData = async (
     // Species
     if (person.species?.length > 0) {
       const speciesData = await Promise.all(
-        person.species.map(url => fetchRelatedItem(url))
+        person.species.map((url) => fetchRelatedItem(url)),
       );
       result.species = speciesData;
     } else {
       result.species = [
         {
-          name: 'Human',
-          id: '1',
-          url: 'https://swapi.info/api/species/1/',
+          name: "Human",
+          id: "1",
+          url: "https://swapi.info/api/species/1/",
         },
       ];
     }
@@ -74,12 +77,12 @@ export const extractRelatedPersonData = async (
     // Starships
     if (person.starships?.length > 0) {
       const starshipData = await Promise.all(
-        person.starships.map(url => fetchRelatedItem(url))
+        person.starships.map((url) => fetchRelatedItem(url)),
       );
       result.starships = starshipData;
     }
   } catch (err) {
-    console.error('Failed to fetch related person data:', err);
+    console.error("Failed to fetch related person data:", err);
   }
 
   return result;

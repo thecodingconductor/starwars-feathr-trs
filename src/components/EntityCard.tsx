@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { SafeImage } from './SafeImage';
+import styled from "styled-components";
+import { SafeImage } from "./SafeImage";
 
 const Card = styled.div`
   background: #111;
@@ -8,7 +8,7 @@ const Card = styled.div`
   padding: 1rem;
   text-align: center;
   transition: box-shadow 0.2s;
-  
+
   &:hover {
     box-shadow: 0 2px 16px 0 rgba(60, 60, 120, 0.18);
   }
@@ -38,9 +38,9 @@ const SubLabel = styled.div`
 interface Entity {
   name: string;
   image?: string;
-  model?: string;        
-  population?: string;  
-  [key: string]: any;   
+  model?: string;
+  population?: string;
+  [key: string]: any;
 }
 
 interface EntityCardProps {
@@ -49,14 +49,17 @@ interface EntityCardProps {
 
 export const EntityCard = ({ entity }: EntityCardProps) => {
   const { name, image, model, population } = entity;
-  const sublabel =
-    model?.length ? model :
-    population?.length ? `Pop: ${population}` :
-    null;
+  const sublabel = model?.length
+    ? model
+    : population?.length
+      ? `Pop: ${population}`
+      : null;
   return (
-    <div style={{ cursor: 'pointer' }}>
+    <div style={{ cursor: "pointer" }}>
       <Card>
-        {image !== undefined && <Avatar src={image || '/fallback.jpg'} alt={name} />}
+        {image !== undefined && (
+          <Avatar src={image || "/fallback.jpg"} alt={name} />
+        )}
         <Name>{name}</Name>
         {sublabel && <SubLabel>{sublabel}</SubLabel>}
       </Card>

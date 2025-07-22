@@ -1,6 +1,6 @@
-import axios from 'axios';
-import type { Planet } from '../types/swapi';
-import { extractIdFromUrl } from './extractId';
+import axios from "axios";
+import type { Planet } from "../types/swapi";
+import { extractIdFromUrl } from "./extractId";
 
 type RelatedItem = {
   name: string;
@@ -13,9 +13,9 @@ type SWAPIEntity = {
 };
 
 export const extractRelatedPlanetData = async (
-  planet: Planet
-): Promise<Record<'residents', RelatedItem[]>> => {
-  const result: Record<'residents', RelatedItem[]> = {
+  planet: Planet,
+): Promise<Record<"residents", RelatedItem[]>> => {
+  const result: Record<"residents", RelatedItem[]> = {
     residents: [],
   };
 
@@ -27,19 +27,19 @@ export const extractRelatedPlanetData = async (
       const res = await axios.get(url);
       const data: unknown = res.data;
 
-      if (typeof data === 'object' && data !== null && 'name' in data) {
+      if (typeof data === "object" && data !== null && "name" in data) {
         return {
-          name: (data as SWAPIEntity).name ?? 'Unknown',
+          name: (data as SWAPIEntity).name ?? "Unknown",
           id,
           url,
         };
       }
     } catch {
-    //  continue to fallback below
+      //  continue to fallback below
     }
 
     return {
-      name: 'Unknown',
+      name: "Unknown",
       id,
       url,
     };
@@ -47,12 +47,12 @@ export const extractRelatedPlanetData = async (
 
   try {
     const residents = await Promise.all(
-      (planet.residents || []).map(fetchResident)
+      (planet.residents || []).map(fetchResident),
     );
 
     result.residents = residents.filter(Boolean) as RelatedItem[];
   } catch (error) {
-    console.error('Failed to fetch related planet data:', error);
+    console.error("Failed to fetch related planet data:", error);
   }
 
   return result;

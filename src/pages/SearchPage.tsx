@@ -1,19 +1,18 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { useModalStore } from '../store/useModalStore';
-import { filterAndSort } from '../utils/filterAndSort';
-import styled, { keyframes } from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useNavStore } from '../store/useNavStore';
-import type { EntityWithUrl } from '../utils/filterAndSort';
-import { Pagination } from '../components/Pagination';
+import React, { useEffect, useState, useRef } from "react";
+import { useLocation, Link } from "react-router-dom";
+import { useModalStore } from "../store/useModalStore";
+import { filterAndSort } from "../utils/filterAndSort";
+import styled, { keyframes } from "styled-components";
+import { motion, AnimatePresence } from "framer-motion";
+import { useNavStore } from "../store/useNavStore";
+import type { EntityWithUrl } from "../utils/filterAndSort";
+import { Pagination } from "../components/Pagination";
 
 const fadeVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   exit: { opacity: 0, y: -10, transition: { duration: 0.3 } },
 };
-
 
 const floatMoon1 = keyframes`
   0%   { transform: translate(100%, 100%) scale(1); opacity: 0; }
@@ -67,7 +66,12 @@ const MoonsWrapper = styled.div`
 
 const PageBackground = styled.div`
   min-height: 100vh;
-  background: linear-gradient(180deg, #71405a 0%, #35394a 79.33%, #3f4957 99.52%);
+  background: linear-gradient(
+    180deg,
+    #71405a 0%,
+    #35394a 79.33%,
+    #3f4957 99.52%
+  );
   padding: 1.5rem;
   padding-top: 60px;
 
@@ -107,10 +111,10 @@ const Logo = styled.img`
 `;
 
 const StyledLink = styled(Link)`
-    &:hover {
-        text-decoration: none;
-    }
-`
+  &:hover {
+    text-decoration: none;
+  }
+`;
 
 const HeroTitle = styled.h1`
   color: white;
@@ -177,7 +181,6 @@ const EmptyResults = styled.div`
   margin-top: 2rem;
 `;
 
-
 type SearchPageProps<T> = {
   title: string;
   entityKey: string;
@@ -193,56 +196,62 @@ type SearchPageProps<T> = {
   baseUrl: string;
 };
 
-function SearchPage<T extends EntityWithUrl>({ title, store, fetchFn, renderCard, baseUrl }: SearchPageProps<T>) {
-
+function SearchPage<T extends EntityWithUrl>({
+  title,
+  store,
+  fetchFn,
+  renderCard,
+  baseUrl,
+}: SearchPageProps<T>) {
   const location = useLocation();
-  const setLocationBackground = useModalStore(s => s.setBackgroundLocation);
+  const setLocationBackground = useModalStore((s) => s.setBackgroundLocation);
 
- const { data, query, setQuery, setData, reset } = store();
+  const { data, query, setQuery, setData, reset } = store();
   const [page, setPage] = useState(1);
 
   const itemsPerPage = 6;
-  const filtered = filterAndSort(data, query, 'name');
-  const paginated = filtered.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+  const filtered = filterAndSort(data, query, "name");
+  const paginated = filtered.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage,
+  );
   const isSearching = query.length > 0;
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
   const popular = data.slice(0, 5);
-
 
   const heroRef = useRef<HTMLDivElement | null>(null);
   const setNavHidden = useNavStore((s) => s.setNavHidden);
   const lastScrollY = useRef(0);
 
-  
- useEffect(() => {
-  const checkOverlap = () => {
-    const heroEl = heroRef.current;
-    const navEl = document.querySelector('nav'); 
+  useEffect(() => {
+    const checkOverlap = () => {
+      const heroEl = heroRef.current;
+      const navEl = document.querySelector("nav");
 
-    if (!heroEl || !navEl) return;
+      if (!heroEl || !navEl) return;
 
-    const heroRect = heroEl.getBoundingClientRect();
-    const navRect = navEl.getBoundingClientRect();
-    const scrollY = window.scrollY;
-    const scrollingUp = scrollY < lastScrollY.current;
-    lastScrollY.current = scrollY;
+      const heroRect = heroEl.getBoundingClientRect();
+      const navRect = navEl.getBoundingClientRect();
+      const scrollY = window.scrollY;
+      const scrollingUp = scrollY < lastScrollY.current;
+      lastScrollY.current = scrollY;
 
-   const isOverlapping =
-      !(heroRect.bottom < navRect.top || heroRect.top > navRect.bottom);
+      const isOverlapping = !(
+        heroRect.bottom < navRect.top || heroRect.top > navRect.bottom
+      );
 
-    
-    if (scrollingUp && heroRect.bottom > 0) {
-      setNavHidden(false);
-    } else if (isOverlapping) {
-      setNavHidden(true);
-    } else {
-      setNavHidden(true);
-    }
-  };
+      if (scrollingUp && heroRect.bottom > 0) {
+        setNavHidden(false);
+      } else if (isOverlapping) {
+        setNavHidden(true);
+      } else {
+        setNavHidden(true);
+      }
+    };
 
-  window.addEventListener('scroll', checkOverlap);
-  return () => window.removeEventListener('scroll', checkOverlap);
-}, [setNavHidden]);
+    window.addEventListener("scroll", checkOverlap);
+    return () => window.removeEventListener("scroll", checkOverlap);
+  }, [setNavHidden]);
 
   useEffect(() => {
     reset();
@@ -253,12 +262,24 @@ function SearchPage<T extends EntityWithUrl>({ title, store, fetchFn, renderCard
     <PageBackground>
       <AnimatePresence mode="wait">
         {!isSearching && (
-          <motion.div key="hero" variants={fadeVariants} initial="hidden" animate="visible" exit="exit">
+          <motion.div
+            key="hero"
+            variants={fadeVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
             <Hero>
-              <MoonsWrapper><MoonOne /><MoonTwo /></MoonsWrapper>
+              <MoonsWrapper>
+                <MoonOne />
+                <MoonTwo />
+              </MoonsWrapper>
               <HeroContent ref={heroRef}>
-                <Logo  src="/logo-lockup.png" />
-                <HeroTitle>Welcome to this easily searchable database for hardcore Star Wars fans!</HeroTitle>
+                <Logo src="/logo-lockup.png" />
+                <HeroTitle>
+                  Welcome to this easily searchable database for hardcore Star
+                  Wars fans!
+                </HeroTitle>
               </HeroContent>
             </Hero>
           </motion.div>
@@ -266,34 +287,66 @@ function SearchPage<T extends EntityWithUrl>({ title, store, fetchFn, renderCard
       </AnimatePresence>
 
       <SearchWrapper>
-        <SearchBar type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Use the force..." />
+        <SearchBar
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Use the force..."
+        />
       </SearchWrapper>
 
       <AnimatePresence mode="wait">
         {isSearching ? (
-          <motion.div key="results" variants={fadeVariants} initial="hidden" animate="visible" exit="exit">
+          <motion.div
+            key="results"
+            variants={fadeVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
             <SearchResultsTitle>SEARCH RESULTS</SearchResultsTitle>
             {filtered.length > 0 ? (
               <>
-                <Pagination page={page} totalPages={totalPages} onPrev={() => setPage(p => p - 1)} onNext={() => setPage(p => p + 1)} />
+                <Pagination
+                  page={page}
+                  totalPages={totalPages}
+                  onPrev={() => setPage((p) => p - 1)}
+                  onNext={() => setPage((p) => p + 1)}
+                />
                 <Grid>
-                  {paginated.map(item => (
-                    <StyledLink key={item.url} to={`${baseUrl}/${item.url.split('/').at(-1)}`} onClick={() => setLocationBackground(location)}>
+                  {paginated.map((item) => (
+                    <StyledLink
+                      key={item.url}
+                      to={`${baseUrl}/${item.url.split("/").at(-1)}`}
+                      onClick={() => setLocationBackground(location)}
+                    >
                       {renderCard(item)}
                     </StyledLink>
                   ))}
                 </Grid>
               </>
-            ) : <EmptyResults>No results found.</EmptyResults>}
+            ) : (
+              <EmptyResults>No results found.</EmptyResults>
+            )}
           </motion.div>
         ) : (
-          <motion.div key="popular" variants={fadeVariants} initial="hidden" animate="visible" exit="exit">
+          <motion.div
+            key="popular"
+            variants={fadeVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
             <PopularContainer>
               <SearchResultsTitle>{title.toUpperCase()}</SearchResultsTitle>
               <Grid>
-                {popular.map(item => (
-                  <StyledLink key={item.url} to={`${baseUrl}/${item.url.split('/').at(-1)}`} onClick={() => setLocationBackground(location)}>
-                  {renderCard(item)}
+                {popular.map((item) => (
+                  <StyledLink
+                    key={item.url}
+                    to={`${baseUrl}/${item.url.split("/").at(-1)}`}
+                    onClick={() => setLocationBackground(location)}
+                  >
+                    {renderCard(item)}
                   </StyledLink>
                 ))}
               </Grid>
@@ -305,5 +358,4 @@ function SearchPage<T extends EntityWithUrl>({ title, store, fetchFn, renderCard
   );
 }
 
-
-export default SearchPage
+export default SearchPage;

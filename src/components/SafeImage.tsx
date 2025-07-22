@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { useState } from 'react';
+import styled from "styled-components";
+import { useState } from "react";
 
 const StyledImg = styled.img`
   object-fit: cover;
@@ -8,7 +8,7 @@ const StyledImg = styled.img`
   height: auto;
 `;
 
-const fallback = '/fallback.jpg';
+const fallback = "/fallback.jpg";
 
 export const SafeImage = ({
   src,

@@ -1,5 +1,5 @@
-import { type JSX } from 'react';
-import { useEffect, useState } from 'react';
+import { type JSX } from "react";
+import { useEffect, useState } from "react";
 
 interface EntityPageProps<T> {
   fetchEntity: (id: string) => Promise<T>;
@@ -11,7 +11,13 @@ interface EntityPageProps<T> {
 
 // Generic Entity Page (Person, Planet, Starship Pages are all very similar.)
 
-function EntityPage<T>({ id, fetchEntity, getById, extractRelated, render }: EntityPageProps<T>) {
+function EntityPage<T>({
+  id,
+  fetchEntity,
+  getById,
+  extractRelated,
+  render,
+}: EntityPageProps<T>) {
   const [entity, setEntity] = useState<T | null>(null);
   const [related, setRelated] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(true);
@@ -24,7 +30,7 @@ function EntityPage<T>({ id, fetchEntity, getById, extractRelated, render }: Ent
         try {
           item = await fetchEntity(id);
         } catch (err) {
-          console.error('Fetch failed', err);
+          console.error("Fetch failed", err);
         }
       }
       if (item) {

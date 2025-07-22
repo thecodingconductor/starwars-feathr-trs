@@ -1,5 +1,5 @@
-import { createEntityStore } from '../createEntityStore';
-import { act } from '@testing-library/react';
+import { createEntityStore } from "../createEntityStore";
+import { act } from "@testing-library/react";
 
 interface TestEntity {
   url: string;
@@ -7,13 +7,13 @@ interface TestEntity {
   rank: number;
 }
 
-describe('createEntityStore', () => {
-  const useStore = createEntityStore<TestEntity>('rank', 'test-store');
+describe("createEntityStore", () => {
+  const useStore = createEntityStore<TestEntity>("rank", "test-store");
   const initialState = useStore.getState();
 
   const sampleData: TestEntity[] = [
-    { url: 'https://swapi.info/api/people/1', name: 'Luke Skywalker', rank: 2 },
-    { url: 'https://swapi.info/api/people/2', name: 'Leia Organa', rank: 1 },
+    { url: "https://swapi.info/api/people/1", name: "Luke Skywalker", rank: 2 },
+    { url: "https://swapi.info/api/people/2", name: "Leia Organa", rank: 1 },
   ];
 
   beforeEach(() => {
@@ -22,43 +22,43 @@ describe('createEntityStore', () => {
     });
   });
 
-  it('sets data correctly', () => {
+  it("sets data correctly", () => {
     act(() => useStore.getState().setData(sampleData));
     expect(useStore.getState().data).toEqual(sampleData);
   });
 
-  it('filters by query', () => {
+  it("filters by query", () => {
     act(() => {
       useStore.getState().setData(sampleData);
-      useStore.getState().setQuery('leia');
+      useStore.getState().setQuery("leia");
     });
 
     const filtered = useStore.getState().filtered();
     expect(filtered).toHaveLength(1);
-    expect(filtered[0].name).toBe('Leia Organa');
+    expect(filtered[0].name).toBe("Leia Organa");
   });
 
-  it('sorts by sortKey', () => {
+  it("sorts by sortKey", () => {
     act(() => useStore.getState().setData(sampleData));
     const sorted = useStore.getState().filtered();
     expect(sorted.map((i: TestEntity) => i.rank)).toEqual([1, 2]);
   });
 
-  it('gets by id from URL', () => {
+  it("gets by id from URL", () => {
     act(() => useStore.getState().setData(sampleData));
-    const leia = useStore.getState().getById('2');
-    expect(leia?.name).toBe('Leia Organa');
+    const leia = useStore.getState().getById("2");
+    expect(leia?.name).toBe("Leia Organa");
   });
 
-  it('resets store state', () => {
+  it("resets store state", () => {
     act(() => {
       useStore.getState().setData(sampleData);
-      useStore.getState().setQuery('Luke');
+      useStore.getState().setQuery("Luke");
     });
 
     useStore.getState().reset();
 
     expect(useStore.getState().data).toEqual([]);
-    expect(useStore.getState().query).toBe('');
+    expect(useStore.getState().query).toBe("");
   });
 });

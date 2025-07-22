@@ -6,13 +6,13 @@ export interface EntityWithUrl {
 export function filterAndSort<T extends EntityWithUrl>(
   data: T[],
   query: string,
-  sortKey: keyof T
+  sortKey: keyof T,
 ): T[] {
   return data
-    .filter(item =>
+    .filter((item) =>
       String(item.name || item.title)
         .toLowerCase()
-        .includes(query.toLowerCase())
+        .includes(query.toLowerCase()),
     )
     .sort((a, b) => {
       const aVal = a[sortKey];
@@ -20,11 +20,11 @@ export function filterAndSort<T extends EntityWithUrl>(
 
       if (aVal === undefined || bVal === undefined) return 0;
 
-      if (typeof aVal === 'string' && typeof bVal === 'string') {
+      if (typeof aVal === "string" && typeof bVal === "string") {
         return aVal.localeCompare(bVal);
       }
 
-      if (typeof aVal === 'number' && typeof bVal === 'number') {
+      if (typeof aVal === "number" && typeof bVal === "number") {
         return aVal - bVal;
       }
 

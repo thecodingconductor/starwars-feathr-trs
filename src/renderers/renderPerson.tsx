@@ -1,8 +1,8 @@
-import type { Person } from '../types/swapi';
-import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
-import { SafeImage } from '../components/SafeImage';
-import styled from 'styled-components';
-import { DetailListItem } from '../components/DetailListItem';
+import type { Person } from "../types/swapi";
+import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
+import { SafeImage } from "../components/SafeImage";
+import styled from "styled-components";
+import { DetailListItem } from "../components/DetailListItem";
 
 const Avatar = styled(SafeImage)`
   width: 130px;
@@ -49,14 +49,20 @@ export const renderPerson = (person: Person, related: RelatedData) => {
       <ImageContainer>
         <Avatar src={person.image} alt={person.name} />
       </ImageContainer>
-      <DetailListItem title="Birth Year" singleItem={{ label: person.birth_year }} />
+      <DetailListItem
+        title="Birth Year"
+        singleItem={{ label: person.birth_year }}
+      />
 
-      <DetailListItem title="Gender" singleItem={{ label: capitalizeFirstLetter(person.gender) }} />
+      <DetailListItem
+        title="Gender"
+        singleItem={{ label: capitalizeFirstLetter(person.gender) }}
+      />
 
       <DetailListItem
         title="Homeworld"
         singleItem={{
-          label: related.homeworld?.name || 'Unknown',
+          label: related.homeworld?.name || "Unknown",
           to: `/planets/${related.homeworld?.id}`,
         }}
       />
@@ -65,8 +71,8 @@ export const renderPerson = (person: Person, related: RelatedData) => {
         title="Species"
         multiItems={
           Array.isArray(related.species) && related.species.length > 0
-            ? related.species.map(s => ({ label: s.name }))
-            : [{ label: 'Unknown' }]
+            ? related.species.map((s) => ({ label: s.name }))
+            : [{ label: "Unknown" }]
         }
       />
 
@@ -74,8 +80,11 @@ export const renderPerson = (person: Person, related: RelatedData) => {
         title="Starships"
         multiItems={
           Array.isArray(related.starships)
-            ? related.starships.map((s) => ({ label: s.name, to: `/starships/${s.id}` }))
-            : [{ label: 'Unknown' }]
+            ? related.starships.map((s) => ({
+                label: s.name,
+                to: `/starships/${s.id}`,
+              }))
+            : [{ label: "Unknown" }]
         }
       />
     </Wrapper>

@@ -1,7 +1,7 @@
-import type { Starship } from '../types/swapi';
-import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
-import { DetailListItem } from '../components/DetailListItem';
-import styled from 'styled-components';
+import type { Starship } from "../types/swapi";
+import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
+import { DetailListItem } from "../components/DetailListItem";
+import styled from "styled-components";
 
 type RelatedData = {
   pilots?: { name: string; id: string }[];
@@ -32,10 +32,13 @@ export const renderStarship = (starship: Starship, related: RelatedData) => {
     <Wrapper>
       <StarshipTitle>{starship.name}</StarshipTitle>
 
-      <DetailListItem title="Model" singleItem={{ label: starship.model || 'Unknown' }} />
+      <DetailListItem
+        title="Model"
+        singleItem={{ label: starship.model || "Unknown" }}
+      />
       <DetailListItem
         title="Manufacturer"
-        singleItem={{ label: starship.manufacturer || 'Unknown' }}
+        singleItem={{ label: starship.manufacturer || "Unknown" }}
       />
       <DetailListItem
         title="Starship Class"
@@ -43,17 +46,26 @@ export const renderStarship = (starship: Starship, related: RelatedData) => {
       />
       <DetailListItem
         title="Hyperdrive Rating"
-        singleItem={{ label: starship.hyperdrive_rating || 'Unknown' }}
+        singleItem={{ label: starship.hyperdrive_rating || "Unknown" }}
       />
-      <DetailListItem title="Crew" singleItem={{ label: starship.crew || 'Unknown' }} />
-      <DetailListItem title="Passengers" singleItem={{ label: starship.passengers || 'Unknown' }} />
+      <DetailListItem
+        title="Crew"
+        singleItem={{ label: starship.crew || "Unknown" }}
+      />
+      <DetailListItem
+        title="Passengers"
+        singleItem={{ label: starship.passengers || "Unknown" }}
+      />
 
       <DetailListItem
         title="Pilots"
         multiItems={
           Array.isArray(related.pilots) && related.pilots.length > 0
-            ? related.pilots.map(p => ({ label: p.name, to: `/people/${p.id}` }))
-            : [{ label: 'Unknown' }]
+            ? related.pilots.map((p) => ({
+                label: p.name,
+                to: `/people/${p.id}`,
+              }))
+            : [{ label: "Unknown" }]
         }
       />
 
@@ -61,8 +73,8 @@ export const renderStarship = (starship: Starship, related: RelatedData) => {
         title="Films"
         multiItems={
           Array.isArray(related.films) && related.films.length > 0
-            ? related.films.map(f => ({ label: f.name }))
-            : [{ label: 'None' }]
+            ? related.films.map((f) => ({ label: f.name }))
+            : [{ label: "None" }]
         }
       />
     </Wrapper>

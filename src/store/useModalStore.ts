@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import type { Location } from 'react-router-dom';
+import { create } from "zustand";
+import type { Location } from "react-router-dom";
 
 interface ModalState {
   backgroundLocation: Location | null;
@@ -7,8 +7,8 @@ interface ModalState {
   clearBackgroundLocation: () => void;
 }
 
-export const useModalStore = create<ModalState>(set => ({
+export const useModalStore = create<ModalState>((set) => ({
   backgroundLocation: null,
-  setBackgroundLocation: loc => set({ backgroundLocation: loc }),
+  setBackgroundLocation: (loc) => set({ backgroundLocation: loc }),
   clearBackgroundLocation: () => set({ backgroundLocation: null }),
 }));

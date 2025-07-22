@@ -1,5 +1,5 @@
-import type { Starship } from '../types/swapi';
-import { extractIdFromUrl } from './extractId';
+import type { Starship } from "../types/swapi";
+import { extractIdFromUrl } from "./extractId";
 
 type RelatedItem = {
   name: string;
@@ -21,69 +21,67 @@ export const extractRelatedStarshipData = async (starship: Starship) => {
   try {
     if (starship.pilots?.length) {
       const pilotData = await Promise.all(
-        starship.pilots.map(async url => {
+        starship.pilots.map(async (url) => {
           const id = extractIdFromUrl(url);
           if (!id) return null;
 
           try {
             const res = await fetch(url);
             const data: unknown = await res.json();
-            if (typeof data === 'object' && data !== null) {
+            if (typeof data === "object" && data !== null) {
               const entity = data as SWAPIEntity;
               return {
-                name: entity.name || entity.title || 'Unknown',
+                name: entity.name || entity.title || "Unknown",
                 id,
                 url,
               };
             }
           } catch {
-              //  continue to fallback below
+            //  continue to fallback below
           }
 
           return {
-              name: 'Unknown',
-              id,
-              url,
-            };
-         
-        })
+            name: "Unknown",
+            id,
+            url,
+          };
+        }),
       );
       result.pilots = pilotData.filter(Boolean) as RelatedItem[];
     }
 
     if (starship.films?.length) {
       const filmData = await Promise.all(
-        starship.films.map(async url => {
+        starship.films.map(async (url) => {
           const id = extractIdFromUrl(url);
           if (!id) return null;
 
           try {
             const res = await fetch(url);
             const data: unknown = await res.json();
-            if(typeof data === 'object' && data !== null) {
-              const entity = data as SWAPIEntity
+            if (typeof data === "object" && data !== null) {
+              const entity = data as SWAPIEntity;
               return {
-                name: entity.title || 'Unknown',
+                name: entity.title || "Unknown",
                 id,
                 url,
               };
             }
-            
           } catch {
             // continue to fallback below
           }
 
           return {
-              name: 'Unknown',
-              id,
-              url,
-            };
-        })
+            name: "Unknown",
+            id,
+            url,
+          };
+        }),
       );
       result.films = filmData.filter(Boolean) as RelatedItem[];
     }
   } catch (error) {
-    console.error('Failed to fetch related starship data:', error);
+    console.error("Failed to fetch related starship data:", error);
   }
 
   return result;

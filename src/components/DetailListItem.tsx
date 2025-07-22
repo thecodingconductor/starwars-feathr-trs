@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom';
-import styled, { css } from 'styled-components';
-
+import { Link } from "react-router-dom";
+import styled, { css } from "styled-components";
 
 const pillStyles = css`
   display: inline-flex;
@@ -83,7 +82,11 @@ type DetailListItemProps = {
   multiItems?: SingleItem[];
 };
 
-export const DetailListItem = ({ title, singleItem, multiItems }: DetailListItemProps) => {
+export const DetailListItem = ({
+  title,
+  singleItem,
+  multiItems,
+}: DetailListItemProps) => {
   return (
     <Wrapper>
       <Title>{title} </Title>
@@ -91,9 +94,17 @@ export const DetailListItem = ({ title, singleItem, multiItems }: DetailListItem
       {singleItem && (
         <DescriptionRow>
           {singleItem.to ? (
-            <Link to={singleItem.to} style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: '#fff' }}>
+            <Link
+              to={singleItem.to}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                textDecoration: "none",
+                color: "#fff",
+              }}
+            >
               <Description>{singleItem.label}</Description>
-              <Arrow src={'/arrow.svg'} alt="arrow" />
+              <Arrow src={"/arrow.svg"} alt="arrow" />
             </Link>
           ) : (
             <Description>{singleItem.label}</Description>
@@ -112,7 +123,7 @@ export const DetailListItem = ({ title, singleItem, multiItems }: DetailListItem
               <Pill as="span" key={idx}>
                 {item.label}
               </Pill>
-            )
+            ),
           )}
         </PillGroup>
       )}

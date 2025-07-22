@@ -1,7 +1,7 @@
-import * as Dialog from '@radix-ui/react-dialog';
-import { VisuallyHidden }  from '@radix-ui/react-visually-hidden'
-import styled from 'styled-components';
-import type { ReactNode } from 'react';
+import * as Dialog from "@radix-ui/react-dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import styled from "styled-components";
+import type { ReactNode } from "react";
 
 const Overlay = styled(Dialog.Overlay)`
   position: fixed;
@@ -34,7 +34,7 @@ const Close = styled(Dialog.Close)`
   background: none;
   border: none;
   color: #fff;
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-size: 1.1rem;
   letter-spacing: 2px;
   cursor: pointer;
@@ -46,7 +46,11 @@ interface EntityModalProps {
   children: ReactNode;
 }
 
-export const EntityModal = ({ open, onOpenChange, children }: EntityModalProps) => (
+export const EntityModal = ({
+  open,
+  onOpenChange,
+  children,
+}: EntityModalProps) => (
   <Dialog.Root open={open} onOpenChange={onOpenChange}>
     <Dialog.Portal>
       <Overlay>

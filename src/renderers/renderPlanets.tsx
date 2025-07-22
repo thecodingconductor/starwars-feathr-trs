@@ -1,6 +1,6 @@
-import type { Planet } from '../types/swapi';
-import styled from 'styled-components';
-import { DetailListItem } from '../components/DetailListItem';
+import type { Planet } from "../types/swapi";
+import styled from "styled-components";
+import { DetailListItem } from "../components/DetailListItem";
 
 type RelatedData = {
   residents?: { name: string; id: string }[];
@@ -32,17 +32,32 @@ export const renderPlanet = (planet: Planet, related: RelatedData) => {
     <Wrapper>
       <PlanetTitle>{name}</PlanetTitle>
 
-      <DetailListItem title="Climate" singleItem={{ label: climate || 'Unknown' }} />
-      <DetailListItem title="Terrain" singleItem={{ label: terrain || 'Unknown' }} />
-      <DetailListItem title="Gravity" singleItem={{ label: gravity || 'Unknown' }} />
-      <DetailListItem title="Population" singleItem={{ label: population || 'Unknown' }} />
+      <DetailListItem
+        title="Climate"
+        singleItem={{ label: climate || "Unknown" }}
+      />
+      <DetailListItem
+        title="Terrain"
+        singleItem={{ label: terrain || "Unknown" }}
+      />
+      <DetailListItem
+        title="Gravity"
+        singleItem={{ label: gravity || "Unknown" }}
+      />
+      <DetailListItem
+        title="Population"
+        singleItem={{ label: population || "Unknown" }}
+      />
 
       <DetailListItem
         title="Residents"
         multiItems={
           Array.isArray(related.residents) && related.residents.length > 0
-            ? related.residents.map(r => ({ label: r.name, to: `/people/${r.id}` }))
-            : [{ label: 'Unknown' }]
+            ? related.residents.map((r) => ({
+                label: r.name,
+                to: `/people/${r.id}`,
+              }))
+            : [{ label: "Unknown" }]
         }
       />
     </Wrapper>

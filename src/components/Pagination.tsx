@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const PaginationWrapper = styled.div`
   display: flex;
@@ -27,7 +27,7 @@ const PageCounter = styled.span`
   color: #fff;
   align-self: center;
   font-family: ${({ theme }) => theme.headingFont};
-`
+`;
 
 interface PaginationProps {
   page: number;
@@ -36,7 +36,12 @@ interface PaginationProps {
   onNext: () => void;
 }
 
-export const Pagination = ({ page, totalPages, onPrev, onNext }: PaginationProps) => (
+export const Pagination = ({
+  page,
+  totalPages,
+  onPrev,
+  onNext,
+}: PaginationProps) => (
   <PaginationWrapper>
     <Button onClick={onPrev} disabled={page === 1}>
       Previous
