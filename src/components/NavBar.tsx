@@ -1,10 +1,15 @@
 import { Link, useLocation } from 'react-router-dom';
-import styled, { css }  from 'styled-components';
+import styled, { css } from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useState } from 'react';
 
-const Nav = styled.nav`
+interface NavBarProps {
+  hidden?: boolean;
+}
+
+const Nav = styled.nav<{ $hidden?: boolean }>`
   position: fixed;
+  top: 0;
   width: 100%;
   box-sizing: border-box;
   display: flex;
@@ -14,6 +19,9 @@ const Nav = styled.nav`
   color: white;
   align-items: center;
   background-color: transparent;
+  z-index: 999;
+  transition: transform 0.3s ease;
+  transform: ${({ $hidden }) => ($hidden ? 'translateY(-100%)' : 'translateY(0)')};
 
   @media (min-width: 768px) {
     justify-content: flex-start;
@@ -33,9 +41,9 @@ const StyledLink = styled(Link)<{ $active?: boolean }>`
       text-shadow: 0px 4px 28px #91EDFF;
     `}
 
-    &:hover {
-      text-decoration: none;
-    }
+  &:hover {
+    text-decoration: none;
+  }
 `;
 
 const DesktopLinks = styled.div`
@@ -91,17 +99,19 @@ const CloseButton = styled(Dialog.Close)`
   cursor: pointer;
 `;
 
-const NavBar = () => {
+const NavBar = ({ hidden = false }: NavBarProps) => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
-   const currentPath = location.pathname;
+  const currentPath = location.pathname;
+
+ 
+
   return (
-    <Nav>
+    <Nav $hidden={hidden}>
       <DesktopLinks>
         <StyledLink $active={currentPath === '/'} to="/">Home</StyledLink>
-        <StyledLink to="/planets" $active={currentPath === '/planets'}>Planets</StyledLink>
-        <StyledLink to="/starships" $active={currentPath === '/starships'}>Starships</StyledLink>
-       
+        <StyledLink $active={currentPath === '/planets'} to="/planets">Planets</StyledLink>
+        <StyledLink $active={currentPath === '/starships'} to="/starships">Starships</StyledLink>
       </DesktopLinks>
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <MobileMenuButton asChild>
@@ -110,18 +120,10 @@ const NavBar = () => {
         <Overlay />
         <MenuContent>
           <CloseButton aria-label="Close menu">&times;</CloseButton>
-          <StyledLink to="/" onClick={() => setOpen(false)}>
-            Home
-          </StyledLink>
-          <StyledLink to="/planets" onClick={() => setOpen(false)}>
-            Planets
-          </StyledLink>
-          <StyledLink to="/starships" onClick={() => setOpen(false)}>
-            Starships
-          </StyledLink>
-          <StyledLink to="/people" onClick={() => setOpen(false)}>
-            People
-          </StyledLink>
+          <StyledLink to="/" onClick={() => setOpen(false)}>Home</StyledLink>
+          <StyledLink to="/planets" onClick={() => setOpen(false)}>Planets</StyledLink>
+          <StyledLink to="/starships" onClick={() => setOpen(false)}>Starships</StyledLink>
+          <StyledLink to="/people" onClick={() => setOpen(false)}>People</StyledLink>
         </MenuContent>
       </Dialog.Root>
     </Nav>

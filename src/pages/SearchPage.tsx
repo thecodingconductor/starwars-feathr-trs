@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useModalStore } from '../store/useModalStore';
 import { filterAndSort } from '../utils/filterAndSort';
 import styled, { keyframes } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavStore } from '../store/useNavStore';
 
 import { Pagination } from '../components/Pagination';
 
@@ -192,6 +193,7 @@ type SearchPageProps<T> = {
 };
 
 function SearchPage<T>({ title, entityKey, store, fetchFn, renderCard, baseUrl }: SearchPageProps<T>) {
+
   const location = useLocation();
   const setLocationBackground = useModalStore(s => s.setBackgroundLocation);
 
@@ -205,6 +207,29 @@ function SearchPage<T>({ title, entityKey, store, fetchFn, renderCard, baseUrl }
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
   const popular = data.slice(0, 5);
 
+
+  const heroRef = useRef<HTMLDivElement | null>(null);
+  const setNavHidden = useNavStore((s) => s.setNavHidden);    
+
+  
+ useEffect(() => {
+  const checkOverlap = () => {
+    const heroEl = heroRef.current;
+    const navEl = document.querySelector('nav'); 
+
+    if (!heroEl || !navEl) return;
+
+    const heroRect = heroEl.getBoundingClientRect();
+    const navRect = navEl.getBoundingClientRect();
+
+    const isOverlapping = !(heroRect.bottom < navRect.top || heroRect.top > navRect.bottom);
+    setNavHidden(isOverlapping);
+  };
+
+  window.addEventListener('scroll', checkOverlap);
+  return () => window.removeEventListener('scroll', checkOverlap);
+}, [setNavHidden]);
+
   useEffect(() => {
     reset();
     fetchFn().then(setData).catch(console.error);
@@ -217,8 +242,8 @@ function SearchPage<T>({ title, entityKey, store, fetchFn, renderCard, baseUrl }
           <motion.div key="hero" variants={fadeVariants} initial="hidden" animate="visible" exit="exit">
             <Hero>
               <MoonsWrapper><MoonOne /><MoonTwo /></MoonsWrapper>
-              <HeroContent>
-                <Logo src="/logo-lockup.png" />
+              <HeroContent ref={heroRef}>
+                <Logo  src="/logo-lockup.png" />
                 <HeroTitle>Welcome to this easily searchable database for hardcore Star Wars fans!</HeroTitle>
               </HeroContent>
             </Hero>
