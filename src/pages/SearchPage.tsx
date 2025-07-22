@@ -5,7 +5,7 @@ import { filterAndSort } from '../utils/filterAndSort';
 import styled, { keyframes } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavStore } from '../store/useNavStore';
-
+import type { EntityWithUrl } from '../utils/filterAndSort';
 import { Pagination } from '../components/Pagination';
 
 const fadeVariants = {
@@ -192,7 +192,7 @@ type SearchPageProps<T> = {
   baseUrl: string;
 };
 
-function SearchPage<T>({ title, entityKey, store, fetchFn, renderCard, baseUrl }: SearchPageProps<T>) {
+function SearchPage<T extends EntityWithUrl>({ title, entityKey, store, fetchFn, renderCard, baseUrl }: SearchPageProps<T>) {
 
   const location = useLocation();
   const setLocationBackground = useModalStore(s => s.setBackgroundLocation);

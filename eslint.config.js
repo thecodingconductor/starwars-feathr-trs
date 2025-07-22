@@ -21,6 +21,9 @@ export default tseslint.config([
       reactRefresh.configs.vite,
     ],
    languageOptions: {
+    globals: {
+      ...globals.browser,
+    },
       parserOptions: {
         project: './tsconfig.json', 
         tsconfigRootDir: path.resolve(), 

@@ -1,4 +1,4 @@
-interface EntityWithUrl {
+export interface EntityWithUrl {
   url: string;
   [key: string]: any;
 }
