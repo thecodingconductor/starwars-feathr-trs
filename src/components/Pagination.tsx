@@ -15,12 +15,19 @@ const Button = styled.button`
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
+  font-family: ${({ theme }) => theme.headingFont};
 
   &:disabled {
     opacity: 0.4;
     cursor: not-allowed;
   }
 `;
+
+const PageCounter = styled.span`
+  color: #fff;
+  align-self: center;
+  font-family: ${({ theme }) => theme.headingFont};
+`
 
 interface PaginationProps {
   page: number;
@@ -34,9 +41,9 @@ export const Pagination = ({ page, totalPages, onPrev, onNext }: PaginationProps
     <Button onClick={onPrev} disabled={page === 1}>
       Previous
     </Button>
-    <span style={{ color: '#fff', alignSelf: 'center' }}>
+    <PageCounter>
       Page {page} of {totalPages}
-    </span>
+    </PageCounter>
     <Button onClick={onNext} disabled={page === totalPages}>
       Next
     </Button>

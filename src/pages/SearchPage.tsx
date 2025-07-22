@@ -125,6 +125,7 @@ const SearchBar = styled.input`
   border-radius: 50px;
   border: none;
   font-size: 1rem;
+  font-family: ${({ theme }) => theme.headingFont};
   width: 100%;
   max-width: 320px;
   background-color: rgba(0, 0, 0, 0.65);
