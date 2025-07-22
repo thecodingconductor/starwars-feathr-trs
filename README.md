@@ -1,10 +1,10 @@
 # Star Wars Explorer – Feathr Takehome Project  
 **by Tristan Rais-Sherman**
 
-## 🧠 Overview  
+## Overview  
 A responsive, searchable Star Wars data explorer built with modern React tooling. This project demonstrates my engineering approach, architectural thinking, and attention to user experience. It uses the SWAPI and akabab APIs to load and display data on People, Planets, and Starships.
 
-## 🧪 Tech Stack  
+## Tech Stack  
 
 - **React.js** + **TypeScript**
 - **Vite**
@@ -14,7 +14,7 @@ A responsive, searchable Star Wars data explorer built with modern React tooling
 - **Jest** + **React Testing Library** for testing
 - **ESLint** + **Prettier** for code quality
 
-## 🚀 Setup Instructions  
+## Setup Instructions  
 
 ```bash
 # 1. Clone the repo
@@ -28,7 +28,7 @@ npm install
 npm run dev
 ```
 
-## 🌟 Features
+## Features
 
 - Mobile and Desktop Responsive UI
 - Search and Filter for People, Planets, and Starships (by name)
@@ -37,7 +37,7 @@ npm run dev
 - Generic Reusable Architecture: `EntityPage`, `EntityStore`, `EntityCard`
 - Unit and Integration Tests for Major Components
 
-## 💡 My Approach
+## My Approach
 
 Any time I start a new project, I use it as an opportunity to improve, challenge myself, use new technologies, and refine my approach.
 
@@ -53,7 +53,7 @@ The layout and visual styling is handled by components in `/renderers`.
 
 I’m pleased with this approach — it's clean, simple, and easy to debug. It's possible I went a bit far with abstraction, but I find it elegant and effective for the problem.
 
-## ⚔️ Challenges Faced
+## Challenges Faced
 
 ### Linting & Tooling Chaos  
 I ran into major issues configuring ESLint with TypeScript and Prettier. My original lint setup silently broke after adding Prettier. I encountered:
