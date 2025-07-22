@@ -7,6 +7,11 @@ type RelatedItem = {
   url: string;
 };
 
+type SWAPIEntity = {
+  name?: string;
+  title?: string;
+};
+
 export const extractRelatedStarshipData = async (starship: Starship) => {
   const result: Record<string, RelatedItem[]> = {
     pilots: [],
@@ -22,19 +27,23 @@ export const extractRelatedStarshipData = async (starship: Starship) => {
 
           try {
             const res = await fetch(url);
-            const data = await res.json();
-            return {
-              name: data.name || 'Unknown',
-              id,
-              url,
-            };
+            const data: unknown = await res.json();
+            if (typeof data === 'object' && data !== null) {
+              const entity = data as SWAPIEntity;
+              return {
+                name: entity.name || entity.title || 'Unknown',
+                id,
+                url,
+              };
+            }
           } catch {
-            return {
+               return {
               name: 'Unknown',
               id,
               url,
             };
           }
+         
         })
       );
       result.pilots = pilotData.filter(Boolean) as RelatedItem[];
@@ -48,12 +57,16 @@ export const extractRelatedStarshipData = async (starship: Starship) => {
 
           try {
             const res = await fetch(url);
-            const data = await res.json();
-            return {
-              name: data.title || 'Unknown',
-              id,
-              url,
-            };
+            const data: unknown = await res.json();
+            if(typeof data === 'object' && data !== null) {
+              const entity = data as SWAPIEntity
+              return {
+                name: entity.title || 'Unknown',
+                id,
+                url,
+              };
+            }
+            
           } catch {
             return {
               name: 'Unknown',
