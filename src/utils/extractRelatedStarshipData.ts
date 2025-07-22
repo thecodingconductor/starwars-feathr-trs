@@ -37,12 +37,14 @@ export const extractRelatedStarshipData = async (starship: Starship) => {
               };
             }
           } catch {
-               return {
+              //  continue to fallback below
+          }
+
+          return {
               name: 'Unknown',
               id,
               url,
             };
-          }
          
         })
       );
@@ -68,12 +70,14 @@ export const extractRelatedStarshipData = async (starship: Starship) => {
             }
             
           } catch {
-            return {
+            // continue to fallback below
+          }
+
+          return {
               name: 'Unknown',
               id,
               url,
             };
-          }
         })
       );
       result.films = filmData.filter(Boolean) as RelatedItem[];

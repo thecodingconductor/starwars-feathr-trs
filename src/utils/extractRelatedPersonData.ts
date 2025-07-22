@@ -1,60 +1,90 @@
 import type { Person } from '../types/swapi';
 import { extractIdFromUrl } from './extractId';
 
-export const extractRelatedPersonData = async (person: Person) => {
-  const result: Record<string, any> = {};
+type RelatedItem = {
+  name: string;
+  url: string;
+  id: string;
+};
+
+type RelatedPersonData = {
+  homeworld?: RelatedItem;
+  species: RelatedItem[];
+  starships?: RelatedItem[];
+};
+
+type SWAPIEntity = {
+  name?: string;
+};
+
+const fetchRelatedItem = async (url: string, fallbackName = 'Unknown'): Promise<RelatedItem | null> => {
+  const id = extractIdFromUrl(url);
+  if (!id) return null;
+
+  try {
+    const res = await fetch(url);
+    const data: unknown = await res.json();
+
+    if (typeof data === 'object' && data !== null && 'name' in data) {
+      return {
+        name: (data as SWAPIEntity).name ?? fallbackName,
+        url,
+        id,
+      };
+    }
+  } catch {
+    // silently fall through to fallback
+  }
+
+  return {
+    name: fallbackName,
+    url,
+    id,
+  };
+};
+
+export const extractRelatedPersonData = async (
+  person: Person
+): Promise<RelatedPersonData | null> => {
+  const result: RelatedPersonData = {
+    species: [],
+  };
 
   try {
     // Homeworld
     if (person.homeworld) {
-      const res = await fetch(person.homeworld);
-      const data = await res.json();
-
-      result.homeworld = {
-        name: data.name,
-        url: person.homeworld,
-        id: extractIdFromUrl(person.homeworld),
-      };
+      const homeworld = await fetchRelatedItem(person.homeworld);
+      if (!homeworld) return null;
+      result.homeworld = homeworld;
     }
+
     // Species
     if (person.species?.length > 0) {
-      const speciesNames = await Promise.all(
-        person.species.map(async (url: string) => {
-          const res = await fetch(url);
-          const data = await res.json();
-
-          return {
-            name: data.name,
-            url,
-            id: extractIdFromUrl(url),
-          };
-        })
+      const speciesData = await Promise.all(
+        person.species.map(url => fetchRelatedItem(url))
       );
-      result.species = speciesNames;
+      result.species = speciesData.filter((item): item is RelatedItem => item !== null);
     } else {
-      result.species = [{ name: 'Human', id: '1' }];
+      result.species = [
+        {
+          name: 'Human',
+          id: '1',
+          url: 'https://swapi.info/api/species/1/',
+        },
+      ];
     }
 
     // Starships
-    if (person.starships.length > 0) {
-      const starships = await Promise.all(
-        person.starships.map(async (url: string) => {
-          const res = await fetch(url);
-          const data = await res.json();
-
-          return {
-            name: data.name,
-            url,
-            id: extractIdFromUrl(url),
-          };
-        })
+    if (person.starships?.length > 0) {
+      const starshipData = await Promise.all(
+        person.starships.map(url => fetchRelatedItem(url))
       );
-
-      result.starships = starships;
+      result.starships = starshipData.filter((item): item is RelatedItem => item !== null);
     }
-    // TODO: add else block as above
   } catch (err) {
-    console.error(err);
+    console.error('Failed to fetch related person data:', err);
+    return null;
   }
+
   return result;
 };
