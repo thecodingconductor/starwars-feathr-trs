@@ -8,6 +8,7 @@ const Card = styled.div`
   padding: 1rem;
   text-align: center;
   transition: box-shadow 0.2s;
+  
   &:hover {
     box-shadow: 0 2px 16px 0 rgba(60, 60, 120, 0.18);
   }
@@ -22,7 +23,8 @@ const Avatar = styled(SafeImage)`
 `;
 
 const Name = styled.div`
-  color: #eee;
+  color: #fff;
+  font-family: ${({ theme }) => theme.headingFont};
   font-weight: bold;
   font-size: 1rem;
 `;

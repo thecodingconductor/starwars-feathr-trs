@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useModalStore } from '../store/useModalStore';
-import { fetchPeople } from '../api/swapi';
-import { usePersonStore } from '../store/usePersonStore';
 import { filterAndSort } from '../utils/filterAndSort';
 import styled, { keyframes } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CharacterCard } from '../components/CharacterCard';
+
 import { Pagination } from '../components/Pagination';
 
 const fadeVariants = {
@@ -106,6 +104,12 @@ const Logo = styled.img`
     width: 560px;
   }
 `;
+
+const StyledLink = styled(Link)`
+    &:hover {
+        text-decoration: none;
+    }
+`
 
 const HeroTitle = styled.h1`
   color: white;
@@ -235,9 +239,9 @@ function SearchPage<T>({ title, entityKey, store, fetchFn, renderCard, baseUrl }
                 <Pagination page={page} totalPages={totalPages} onPrev={() => setPage(p => p - 1)} onNext={() => setPage(p => p + 1)} />
                 <Grid>
                   {paginated.map(item => (
-                    <Link key={(item as any).url} to={`${baseUrl}/${(item as any).url.split('/').at(-2)}`} onClick={() => setLocationBackground(location)}>
+                    <StyledLink key={(item as any).url} to={`${baseUrl}/${(item as any).url.split('/').at(-2)}`} onClick={() => setLocationBackground(location)}>
                       {renderCard(item)}
-                    </Link>
+                    </StyledLink>
                   ))}
                 </Grid>
               </>
@@ -249,9 +253,9 @@ function SearchPage<T>({ title, entityKey, store, fetchFn, renderCard, baseUrl }
               <SearchResultsTitle>{title.toUpperCase()}</SearchResultsTitle>
               <Grid>
                 {popular.map(item => (
-                  <Link key={(item as any).url} to={`${baseUrl}/${(item as any).url.split('/').at(-2)}`} onClick={() => setLocationBackground(location)}>
+                  <StyledLink key={(item as any).url} to={`${baseUrl}/${(item as any).url.split('/').at(-1)}`} onClick={() => setLocationBackground(location)}>
                   {renderCard(item)}
-                  </Link>
+                  </StyledLink>
                 ))}
               </Grid>
             </PopularContainer>

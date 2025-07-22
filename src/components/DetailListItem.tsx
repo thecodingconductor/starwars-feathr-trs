@@ -20,11 +20,20 @@ const Wrapper = styled.div`
   border-radius: 20px;
   border: 2px solid rgba(207, 65, 119, 0.5);
   margin-bottom: 1.5rem;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    min-width: 400px;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
 `;
 
 const Title = styled.h3`
   font-family: ${({ theme }) => theme.headingFont};
-  margin-bottom: 0.5rem;
 `;
 
 const DescriptionRow = styled.div`
@@ -36,7 +45,6 @@ const DescriptionRow = styled.div`
 const Description = styled.span`
   font-size: 1rem;
   font-family: ${({ theme }) => theme.headingFont};
-  text-decoration: underline;
   text-transform: uppercase;
 `;
 
@@ -78,12 +86,12 @@ type DetailListItemProps = {
 export const DetailListItem = ({ title, singleItem, multiItems }: DetailListItemProps) => {
   return (
     <Wrapper>
-      <Title>{title}</Title>
+      <Title>{title} </Title>
 
       {singleItem && (
         <DescriptionRow>
           {singleItem.to ? (
-            <Link to={singleItem.to} style={{ display: 'flex', alignItems: 'center' }}>
+            <Link to={singleItem.to} style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: '#fff' }}>
               <Description>{singleItem.label}</Description>
               <Arrow src={'/arrow.svg'} alt="arrow" />
             </Link>

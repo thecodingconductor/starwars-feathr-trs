@@ -100,7 +100,7 @@ const NavBar = () => {
       <DesktopLinks>
         <StyledLink $active={currentPath === '/'} to="/">Home</StyledLink>
         <StyledLink to="/planets" $active={currentPath === '/planets'}>Planets</StyledLink>
-        <StyledLink to="/starships" $active={currentPath === '/planets'}>Starships</StyledLink>
+        <StyledLink to="/starships" $active={currentPath === '/starships'}>Starships</StyledLink>
        
       </DesktopLinks>
       <Dialog.Root open={open} onOpenChange={setOpen}>

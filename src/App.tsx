@@ -16,11 +16,10 @@ import { fetchPeople, fetchPlanets, fetchStarships } from './api/swapi';
 import { usePersonStore } from './store/usePersonStore';
 import { usePlanetStore } from './store/usePlanetStore';
 import { useStarshipStore } from './store/useStarshipStore';
+import { ROUTES } from './constants/routes'
 
 import { EntityCard }from './components/EntityCard'
 
-// import PlanetCard from './components/cards/PlanetCard';
-// import StarshipCard from './components/cards/StarshipCard';
 
 
 function App() {
@@ -37,7 +36,7 @@ function App() {
         <Routes location={backgroundLocation || location}>
           <Route element={<Layout />}>
             <Route
-                  path="/"
+                  path={ROUTES.HOME}
                   element={
                     <SearchPage
                       title="Popular Characters"
@@ -45,13 +44,13 @@ function App() {
                       store={usePersonStore}
                       fetchFn={fetchPeople}
                       renderCard={(person) => <EntityCard entity={person} />}
-                      baseUrl="/people"
+                      baseUrl={ROUTES.PEOPLE}
                     />
                   }
                 />
 
                 <Route
-                  path="/planets"
+                  path={ROUTES.PLANETS}
                   element={
                     <SearchPage
                       title="Popular Planets"
@@ -59,13 +58,13 @@ function App() {
                       store={usePlanetStore}
                       fetchFn={fetchPlanets}
                       renderCard={(planet) => <EntityCard entity={planet} />}
-                      baseUrl="/planets"
+                      baseUrl={ROUTES.PLANETS}
                     />
                   }
                 />
 
                 <Route
-                  path="/starships"
+                  path={ROUTES.STARSHIPS}
                   element={
                     <SearchPage
                       title="Popular Starships"
@@ -73,7 +72,7 @@ function App() {
                       store={useStarshipStore}
                       fetchFn={fetchStarships}
                       renderCard={(ship) => <EntityCard entity={ship} />}
-                      baseUrl="/starships"
+                      baseUrl={ROUTES.STARSHIPS}
                     />
                   }
                 />
@@ -84,14 +83,14 @@ function App() {
         {backgroundLocation && (
           <Routes>
             <Route
-              path="/people/:id"
+              path={`${ROUTES.PEOPLE}/:id`}
               element={
                 <EntityModal
                   open
                   onOpenChange={open => {
                     if (!open) {
                       useModalStore.getState().clearBackgroundLocation();
-                      void navigate('/');
+                      void navigate(ROUTES.HOME);
                     }
                   }}
                 >
@@ -101,14 +100,14 @@ function App() {
             />
 
             <Route
-              path="/planets/:id"
+              path={`${ROUTES.PLANETS}/:id`}
               element={
                 <EntityModal
                   open
                   onOpenChange={open => {
                     if (!open) {
                       useModalStore.getState().clearBackgroundLocation();
-                      void navigate('/');
+                      void navigate(ROUTES.HOME);
                     }
                   }}
                 >
@@ -118,14 +117,14 @@ function App() {
             />
 
             <Route
-              path="/starships/:id"
+              path={`${ROUTES.STARSHIPS}/:id`}
               element={
                 <EntityModal
                   open
                   onOpenChange={open => {
                     if (!open) {
                       useModalStore.getState().clearBackgroundLocation();
-                      void navigate('/');
+                      void navigate(ROUTES.HOME);
                     }
                   }}
                 >
