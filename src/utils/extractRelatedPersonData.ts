@@ -17,9 +17,8 @@ type SWAPIEntity = {
   name?: string;
 };
 
-const fetchRelatedItem = async (url: string, fallbackName = 'Unknown'): Promise<RelatedItem | null> => {
-  const id = extractIdFromUrl(url);
-  if (!id) return null;
+const fetchRelatedItem = async (url: string, fallbackName = 'Unknown'): Promise<RelatedItem> => {
+  const id = extractIdFromUrl(url) ?? 'unknown';
 
   try {
     const res = await fetch(url);
@@ -33,7 +32,7 @@ const fetchRelatedItem = async (url: string, fallbackName = 'Unknown'): Promise<
       };
     }
   } catch {
-    // silently fall through to fallback
+    // Silent fallback
   }
 
   return {
@@ -45,7 +44,7 @@ const fetchRelatedItem = async (url: string, fallbackName = 'Unknown'): Promise<
 
 export const extractRelatedPersonData = async (
   person: Person
-): Promise<RelatedPersonData | null> => {
+): Promise<RelatedPersonData> => {
   const result: RelatedPersonData = {
     species: [],
   };
@@ -53,9 +52,7 @@ export const extractRelatedPersonData = async (
   try {
     // Homeworld
     if (person.homeworld) {
-      const homeworld = await fetchRelatedItem(person.homeworld);
-      if (!homeworld) return null;
-      result.homeworld = homeworld;
+      result.homeworld = await fetchRelatedItem(person.homeworld);
     }
 
     // Species
@@ -63,7 +60,7 @@ export const extractRelatedPersonData = async (
       const speciesData = await Promise.all(
         person.species.map(url => fetchRelatedItem(url))
       );
-      result.species = speciesData.filter((item): item is RelatedItem => item !== null);
+      result.species = speciesData;
     } else {
       result.species = [
         {
@@ -79,11 +76,10 @@ export const extractRelatedPersonData = async (
       const starshipData = await Promise.all(
         person.starships.map(url => fetchRelatedItem(url))
       );
-      result.starships = starshipData.filter((item): item is RelatedItem => item !== null);
+      result.starships = starshipData;
     }
   } catch (err) {
     console.error('Failed to fetch related person data:', err);
-    return null;
   }
 
   return result;
