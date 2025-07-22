@@ -210,7 +210,8 @@ function SearchPage<T extends EntityWithUrl>({ title, store, fetchFn, renderCard
 
 
   const heroRef = useRef<HTMLDivElement | null>(null);
-  const setNavHidden = useNavStore((s) => s.setNavHidden);    
+  const setNavHidden = useNavStore((s) => s.setNavHidden);
+  const lastScrollY = useRef(0);
 
   
  useEffect(() => {
@@ -222,9 +223,21 @@ function SearchPage<T extends EntityWithUrl>({ title, store, fetchFn, renderCard
 
     const heroRect = heroEl.getBoundingClientRect();
     const navRect = navEl.getBoundingClientRect();
+    const scrollY = window.scrollY;
+    const scrollingUp = scrollY < lastScrollY.current;
+    lastScrollY.current = scrollY;
 
-    const isOverlapping = !(heroRect.bottom < navRect.top || heroRect.top > navRect.bottom);
-    setNavHidden(isOverlapping);
+   const isOverlapping =
+      !(heroRect.bottom < navRect.top || heroRect.top > navRect.bottom);
+
+    
+    if (scrollingUp && heroRect.bottom > 0) {
+      setNavHidden(false);
+    } else if (isOverlapping) {
+      setNavHidden(true);
+    } else {
+      setNavHidden(true);
+    }
   };
 
   window.addEventListener('scroll', checkOverlap);
