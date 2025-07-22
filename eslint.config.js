@@ -23,6 +23,8 @@ export default tseslint.config([
    languageOptions: {
     globals: {
       ...globals.browser,
+      ...globals.jest,
+      ...globals.node
     },
       parserOptions: {
         project: './tsconfig.json', 

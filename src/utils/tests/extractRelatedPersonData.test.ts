@@ -35,13 +35,13 @@ describe('extractRelatedPersonData', () => {
   
     mockFetch
       .mockResolvedValueOnce({
-        json: async () => ({ name: 'Tatooine' }),
+        json: async () => await Promise.resolve({ name: 'Tatooine' }),
       })
       .mockResolvedValueOnce({
-        json: async () => ({ name: 'Human' }),
+        json: async () => await Promise.resolve({ name: 'Human' }),
       })
       .mockResolvedValueOnce({
-        json: async () => ({ name: 'X-Wing' }),
+        json: async () => await Promise.resolve({ name: 'X-Wing' }),
       });
 
     const result = await extractRelatedPersonData(person);
@@ -92,7 +92,7 @@ describe('extractRelatedPersonData', () => {
         edited: '',
         };
 
-    const result = await extractRelatedPersonData(person as Person);
+    const result = await extractRelatedPersonData(person);
 
     expect(result.species).toEqual([{ name: 'Human', id: '1' }]);
   });
