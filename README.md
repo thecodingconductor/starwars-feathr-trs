@@ -1,6 +1,8 @@
 # Star Wars Explorer – Feathr Takehome Project  
 **by Tristan Rais-Sherman**
 
+**View Live Site** -> https://starwars-feathr-trs-bglq.vercel.app/
+
 ## Overview  
 A responsive, searchable Star Wars data explorer built with modern React tooling. This project demonstrates my engineering approach, architectural thinking, and attention to user experience. It uses the SWAPI and akabab APIs to load and display data on People, Planets, and Starships.
 
