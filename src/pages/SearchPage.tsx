@@ -264,7 +264,7 @@ function SearchPage<T extends EntityWithUrl>({ title, store, fetchFn, renderCard
                 <Pagination page={page} totalPages={totalPages} onPrev={() => setPage(p => p - 1)} onNext={() => setPage(p => p + 1)} />
                 <Grid>
                   {paginated.map(item => (
-                    <StyledLink key={item.url} to={`${baseUrl}/${item.url.split('/').at(-2)}`} onClick={() => setLocationBackground(location)}>
+                    <StyledLink key={item.url} to={`${baseUrl}/${item.url.split('/').at(-1)}`} onClick={() => setLocationBackground(location)}>
                       {renderCard(item)}
                     </StyledLink>
                   ))}
