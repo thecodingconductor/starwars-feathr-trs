@@ -1,12 +1,10 @@
-# Star Wars Explorer – Feathr Takehome Project
-
+# Star Wars Explorer – Feathr Takehome Project  
 **by Tristan Rais-Sherman**
 
-## Overview
-
+## Overview  
 A responsive, searchable Star Wars data explorer built with modern React tooling. This project demonstrates my engineering approach, architectural thinking, and attention to user experience. It uses the SWAPI and akabab APIs to load and display data on People, Planets, and Starships.
 
-## Tech Stack
+## Tech Stack  
 
 - **React.js** + **TypeScript**
 - **Vite**
@@ -16,65 +14,64 @@ A responsive, searchable Star Wars data explorer built with modern React tooling
 - **Jest** + **React Testing Library** for testing
 - **ESLint** + **Prettier** for code quality
 
-## Setup Instructions
+## Setup Instructions  
 
-```bash
-# 1. Clone the repo
-git clone https://github.com/your-username/starwars-feathr-trs.git
-cd starwars-feathr-trs
+1. Clone the repo:  
+   ```bash
+   git clone https://github.com/your-username/starwars-feathr-trs.git
+   cd starwars-feathr-trs
+   ```
 
-# 2. Install dependencies
-npm install
+2. Install dependencies:  
+   ```bash 
+   npm install
+   ```
 
-# 3. Run the development server
-npm run dev
-```
+3. Run the development server:  
+   ```bash
+   npm run dev
+   ```
 
-## Features
+# Features
 
 - Mobile and Desktop Responsive UI
 - Search and Filter for People, Planets, and Starships (by name)
 - Pagination Controls
 - Modals for Detail Pages using Radix UI Components
-- Generic Reusable Architecture: `EntityPage`, `EntityStore`, `EntityCard`
-- Unit and Integration Tests for Major Components
+- Generic Reusable architecture such as EntityPage, EntityStore, EntityCard...
+- Unit and Integration tests for major components
 
-## My Approach
+# My Approach
 
-Any time I start a new project, I use it as an opportunity to improve, challenge myself, use new technologies, and refine my approach.
+Any time I start a new project, I use it as an opportunity to improve, challenge myself, use new technologies, libraries, and consider new approaches.
 
-### Zustand
+- Zustand  
+  I have never used Zustand in a project, so this was a great opportunity to try it out to manage app state.
 
-This was my first time using Zustand for state management. It proved to be a great fit — simple, lightweight, and flexible.
+- Abstraction  
+  As I got further into building out the application, writing logic to manage fetching People, Planets, and Starships, adding filtering and sorting capabilities, I discovered I was rewriting a lot of code.
 
-### Abstraction
+  Each page in this app did similar things for each Entity type. So I thought to make a generic EntityPage, and a generic EntityStore, and EntityCard to follow DRY principles.
 
-As the app grew, I noticed a lot of repetition across People, Planets, and Starships. I refactored into a generic `EntityPage`, `EntityStore`, and `EntityCard` architecture to follow DRY principles and improve maintainability.
+  I'm very happy with this approach, and feel like each component does simple tasks, the files are clean and easy to debug. Each entity page, like PlanetPage, PersonPage, simply pulls in some functions, and passes them to the EntityPage component, which handles loading and rendering the data.
 
-Each entity page, like `PlanetPage` or `PersonPage`, simply imports some functions and passes them to `EntityPage`, which handles loading and rendering. This results in highly readable, modular code.
+  The layout and styling itself is handled by the renderers in /renderers
 
-The layout and visual styling is handled by components in `/renderers`.
+  It is certainly possible I went too far with it, but I find this easy to read and digest for review.
 
-I’m pleased with this approach — it's clean, simple, and easy to debug. It's possible I went a bit far with abstraction, but I find it elegant and effective for the problem.
+# Challenges 
 
-## Challenges Faced
+- Linting and Tooling  
+  Towards the end of the project, I found myself wrestling with some cascading issues around the interactions between TS, ESLint, and Prettier.
 
-### Linting & Tooling Chaos
+- Abstraction vs. Simplicity  
+  One of the main challenges that occupied my thinking was when Abstraction was needed, and how much. As the app grew, I noticed that I was re-writing a lot of similar code. Rethinking my approach here and moving towards a more generic style with createEntityStore and EntityPage. I liked what I ended up with, but it required some thought. 
 
-I ran into major issues configuring ESLint with TypeScript and Prettier. My original lint setup silently broke after adding Prettier. I encountered:
+  I was using Zustand for the first time, and so finding the best way of writing a generic store, as well as using the correct types took some time. 
 
-- Conflicting ESLint/TS versions
-- Thousands of false-positive lint errors from `node_modules`
-- ESM vs. CommonJS confusion due to Vite's module system
+- Combining Data Sources  
+  The SWAPI API does not return any image data, but I really felt that if it were possible, including images would go a long way to enhancing the user experience. I was able to find another Star Wars character API that did in fact return image data. So I had to come up with an approach to finding related data - and making a second API call to pull in image data. This took some time and effort to get done well. 
 
-### Abstraction vs. Simplicity
-
-It took some iteration to decide when abstraction was appropriate. Implementing `createEntityStore`, `EntityPage`, and other generic components required careful TypeScript design and architectural planning — especially while learning Zustand for the first time.
-
-### Combining Data Sources
-
-SWAPI lacked image data. I enhanced the user experience by fetching from a second API (`akabab/starwars-api`). Matching characters and fetching images added complexity but made the app feel complete.
-
-### Lightsaber Cursor & SFX (Unfinished)
-
-I experimented with a fun cursor effect that turned the user’s pointer into a lightsaber with sound effects. I ran out of time before polishing it, but it’s a direction I’d love to revisit.
+- Unfinished Lightsaber / Sound effect  
+  I had a cool effect where I turned the users cursor into a lightsaber, and attempted to use a few different audio files to emulate the sounds of the lightsaber turning on, waving around, etc.
+  I got pretty close, but struggled getting the "wave" data working correctly with the audio. Given the time constraints, I was unable to finish this feature, which I thought would have been a really nice touch.
