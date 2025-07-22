@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import NavBar from './NavBar';
 import { useNavStore } from '../store/useNavStore';
 
-// import CursorLightsaber from './CursorLightsaber';
+
 
 const Container = styled.div``;
 
@@ -16,7 +16,6 @@ const Layout = () => {
       <NavBar hidden={navHidden}/>
      
       <Container>
-        {/* TODO: Outlet */}
         <Outlet />
       </Container>
     </>

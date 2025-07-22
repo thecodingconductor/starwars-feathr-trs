@@ -1,21 +1,35 @@
-# starwars-feathr-trs
+# Star Wars Explorer – Feathr Takehome Project  
+**by Tristan Rais-Sherman**
 
-Tristan Rais-Sherman Feathr Takehome Project
+## 🧠 Overview  
+A responsive, searchable Star Wars data explorer built with modern React tooling. This project demonstrates my engineering approach, architectural thinking, and attention to user experience. It uses the SWAPI and akabab APIs to load and display data on People, Planets, and Starships.
 
-# Tech Stack
+## 🧪 Tech Stack  
 
-- React.js
-- TypeScript
-- CSS3, HTML5
-- Zustand
-- Styled Components
+- **React.js** + **TypeScript**
+- **Vite**
+- **Zustand** for state management
+- **Styled Components** for CSS-in-JS styling
+- **Radix UI** for accessible modals
+- **Jest** + **React Testing Library** for testing
+- **ESLint** + **Prettier** for code quality
 
-# Usage
+## 🚀 Setup Instructions  
 
-To run the app simply run the following commands in the root folder
+1. Clone the repo:  
+   ```bash
+   git clone https://github.com/your-username/starwars-feathr-trs.git
+   cd starwars-feathr-trs
 
-- npm i
-- npm run dev
+2. Install dependencies:
+  ```bash 
+  npm install
+
+3. Run the development server:
+  ```bash
+  npm run dev
+
+
 
 # Approach
 
