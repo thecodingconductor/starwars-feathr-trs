@@ -23,97 +23,57 @@ A responsive, searchable Star Wars data explorer built with modern React tooling
 
 2. Install dependencies:
   ```bash 
-  npm install
+    npm install
+
 
 3. Run the development server:
   ```bash
-  npm run dev
+    npm run dev
 
 
+# Features
 
-# Approach
+- Mobile and Desktop Responsive UI
+- Search and Filter for People, Planets, and Starships (by name)
+- Pagination Controls
+- Modals for Detail Pages using Radix UI Components
+- Generic Reusable architecture such as EntityPage, EntityStore, EntityCard...
+- Unit and Integration tests for major components
 
-Any time I start a new project, I use it as an opporunity to improve, challenge myself, and use new technologies, libraries, and approaches.
+
+ 
+
+# My Approach
+
+Any time I start a new project, I use it as an opporunity to improve, challenge myself, use new technologies, libraries, and consider new approaches.
 
 - Zustand
   I have never used Zustand in a project, so this was a great opportunity to try it out to manage app state.
-- Abstraction
-  As I got further into building out the application, and writing logic to manage fetching People, Planets, and Starships, adding filtering and sorting capabilities, I discvored I was rewriting a lot of similar code.
 
-  Each page in this app did similar things for each Entity type. So I thought to make a generic EntityPage, and a generic EntityStore, to follow DRY principles.
+- Abstraction
+  As I got further into building out the application, writing logic to manage fetching People, Planets, and Starships, adding filtering and sorting capabilities, I discovered I was rewriting a lot of code.
+
+  Each page in this app did similar things for each Entity type. So I thought to make a generic EntityPage, and a generic EntityStore, and EntityCard to follow DRY principles.
 
   I'm very happy with this approach, and feel like each component does simple tasks, the files are clean and easy to debug. Each entity page, like PlanetPage, PersonPage, simply pulls in some functions, and passes them to the EntityPage component, which handles loading and rendering the data.
 
   The layout and styling itself is handled by the renderers in /renderers
 
-  It is certainly possible I went too far and got too cute with it, but I find this easy to read and digest for review.
+  It is certainly possible I went too far with it, but I find this easy to read and digest for review.
 
-# React + TypeScript + Vite
+# Challenges 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- Linting and Tooling
+  Towards the end of the project, I found myself wrestling with some cascading issues around the interactions between TS, ESLint, and Prettier.
 
-Currently, two official plugins are available:
+- Abscraction vs. Simplicity 
+  One of the main challenges that occupied my thinking was when Abstraction was needed, and how much. As the app grew, I noticed that I was re-writing a lot of similar code. Rethinking my approach here and moving towards a more generic style with createEntityStore and EntityPage. I liked what I ended up with, but it required some thought. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  I was using Zustand for the first time, and so finding the best way of writing a generic store, as well as using the correct types took some time. 
 
-## Expanding the ESLint configuration
+- Combining Data Sources
+  The SWAPI API does not return any image data, but I really felt that if it were possible, including images would go a long way to enhancing the user experience. I was able to find another Star Wars character API that did in fact return image data. So I had to come up with an approach to finding related data - and making a second api call to pull in image data. This took some time and effort to get done well. 
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+- Unfinished Lightsaber / Sound effect
+  I had a cool effect where I turned the users cursor into a lightsaber, and attempted to use a few different audio files to emulate the sounds of the lightsaber turning on, waving around, etc.
+  I got pretty close, but struggled getting the "wave" data working correctly with the audio. Given the time constraints, I was unable to finish this feature, which I thought would have been a really nice touch. 
