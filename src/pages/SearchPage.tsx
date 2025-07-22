@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useModalStore } from '../store/useModalStore';
 import { filterAndSort } from '../utils/filterAndSort';
@@ -192,7 +192,7 @@ type SearchPageProps<T> = {
   baseUrl: string;
 };
 
-function SearchPage<T extends EntityWithUrl>({ title, entityKey, store, fetchFn, renderCard, baseUrl }: SearchPageProps<T>) {
+function SearchPage<T extends EntityWithUrl>({ title, store, fetchFn, renderCard, baseUrl }: SearchPageProps<T>) {
 
   const location = useLocation();
   const setLocationBackground = useModalStore(s => s.setBackgroundLocation);
@@ -264,7 +264,7 @@ function SearchPage<T extends EntityWithUrl>({ title, entityKey, store, fetchFn,
                 <Pagination page={page} totalPages={totalPages} onPrev={() => setPage(p => p - 1)} onNext={() => setPage(p => p + 1)} />
                 <Grid>
                   {paginated.map(item => (
-                    <StyledLink key={(item as any).url} to={`${baseUrl}/${(item as any).url.split('/').at(-2)}`} onClick={() => setLocationBackground(location)}>
+                    <StyledLink key={item.url} to={`${baseUrl}/${item.url.split('/').at(-2)}`} onClick={() => setLocationBackground(location)}>
                       {renderCard(item)}
                     </StyledLink>
                   ))}
@@ -278,7 +278,7 @@ function SearchPage<T extends EntityWithUrl>({ title, entityKey, store, fetchFn,
               <SearchResultsTitle>{title.toUpperCase()}</SearchResultsTitle>
               <Grid>
                 {popular.map(item => (
-                  <StyledLink key={(item as any).url} to={`${baseUrl}/${(item as any).url.split('/').at(-1)}`} onClick={() => setLocationBackground(location)}>
+                  <StyledLink key={item.url} to={`${baseUrl}/${item.url.split('/').at(-1)}`} onClick={() => setLocationBackground(location)}>
                   {renderCard(item)}
                   </StyledLink>
                 ))}
