@@ -49,6 +49,7 @@ export const renderPerson = (person: Person, related: RelatedData) => {
       <ImageContainer>
         <Avatar src={person.image} alt={person.name} />
       </ImageContainer>
+      
       <DetailListItem
         title="Birth Year"
         singleItem={{ label: person.birth_year }}

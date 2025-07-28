@@ -1,6 +1,8 @@
 import axios from "axios";
 import type { Film, Person, Planet, Starship } from "../types/swapi";
 
+// Simple Api Fetching
+
 const SWAPI_BASE = "https://swapi.info/api";
 const IMAGE_BASE = "https://akabab.github.io/starwars-api/api/id";
 const FALLBACK_IMAGE = "/fallback.jpg";
