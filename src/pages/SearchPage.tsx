@@ -196,6 +196,8 @@ type SearchPageProps<T> = {
   baseUrl: string;
 };
 
+// Essentially the home page of the entire app. 
+// This file is a bit long and could probably stand to be broken up. 
 function SearchPage<T extends EntityWithUrl>({
   title,
   store,
@@ -203,22 +205,32 @@ function SearchPage<T extends EntityWithUrl>({
   renderCard,
   baseUrl,
 }: SearchPageProps<T>) {
+  // react-router-dom
   const location = useLocation();
   const setLocationBackground = useModalStore((s) => s.setBackgroundLocation);
 
+  // get the store.
   const { data, query, setQuery, setData, reset } = store();
-  const [page, setPage] = useState(1);
 
+  // for Pagination
+  const [page, setPage] = useState(1);
   const itemsPerPage = 6;
+
+  // datasets are not that big and Lighthouse score is almost perfect, but useMemo could be used here if needed.
+  // const filtered = useMemo(() => filterAndSort(data, query, 'name'), [data, query]);
   const filtered = filterAndSort(data, query, "name");
+
+  // same here.
   const paginated = filtered.slice(
     (page - 1) * itemsPerPage,
     page * itemsPerPage,
   );
+
   const isSearching = query.length > 0;
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
   const popular = data.slice(0, 5);
 
+  // For scrolling the hero nav out of view when Hero intersects.
   const heroRef = useRef<HTMLDivElement | null>(null);
   const setNavHidden = useNavStore((s) => s.setNavHidden);
   const lastScrollY = useRef(0);
@@ -253,10 +265,16 @@ function SearchPage<T extends EntityWithUrl>({
     return () => window.removeEventListener("scroll", checkOverlap);
   }, [setNavHidden]);
 
+  // I noticed something after submitting. I was resetting the entire store - which kind of made the persistence in Zustand pointless. 
+  // All i wanted to do was the reset the search query. 
+  // This should avoid completely resetting the store. Small improvement.
   useEffect(() => {
-    reset();
-    fetchFn().then(setData).catch(console.error);
-  }, [fetchFn, setData, reset]);
+    setQuery("")
+    if (data.length === 0) {
+      fetchFn().then(setData).catch(console.error);
+    }
+
+  }, [fetchFn, setData, reset, data.length, setQuery]);
 
   return (
     <PageBackground>

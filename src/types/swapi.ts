@@ -33,7 +33,7 @@ export type FilmStore = {
   setQuery: (q: string) => void;
   getFilmById: (id: string | number) => Film | undefined;
 };
-
+// Person Type
 export interface Person {
   name: string;
   image: string;
@@ -54,6 +54,7 @@ export interface Person {
   url: string;
 }
 
+// 
 export type PersonStore = {
   people: Person[];
   query: string;

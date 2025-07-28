@@ -20,7 +20,11 @@ import { ROUTES } from "./constants/routes";
 
 import { EntityCard } from "./components/EntityCard";
 
+// Entry Point of the App
+// Using react-router-dom for navigation.
+
 function App() {
+  // These lines are needed to support the modal style navigation we are using.
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -32,6 +36,7 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Routes location={backgroundLocation || location}>
           <Route element={<Layout />}>
+          {/* Three "versions" of the Search (Home) Page. Characters, Planets, and Starships */}
             <Route
               path={ROUTES.HOME}
               element={
@@ -76,6 +81,8 @@ function App() {
           </Route>
         </Routes>
 
+              {/* Detail Pages. */}
+              {/* If a backgroundLocation exists, it means we are on a detail page. */}
         {backgroundLocation && (
           <Routes>
             <Route
@@ -86,6 +93,7 @@ function App() {
                   onOpenChange={(open) => {
                     if (!open) {
                       useModalStore.getState().clearBackgroundLocation();
+                      // void needed to satisty EsLint/no-floating-promises since navigate() potentially returns A Promise. 
                       void navigate(ROUTES.HOME);
                     }
                   }}

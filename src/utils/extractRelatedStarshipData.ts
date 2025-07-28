@@ -11,7 +11,7 @@ type SWAPIEntity = {
   name?: string;
   title?: string;
 };
-
+// The extract Related ENTITY Data functions are needed to display info / and names of related data, like the Pilots for Starships, or the Planets, etc. API only returns a url. 
 export const extractRelatedStarshipData = async (starship: Starship) => {
   const result: Record<string, RelatedItem[]> = {
     pilots: [],

@@ -11,6 +11,7 @@ interface EntityPageProps<T> {
 
 // Generic Entity Page (Person, Planet, Starship Pages are all very similar.)
 
+
 function EntityPage<T>({
   id,
   fetchEntity,

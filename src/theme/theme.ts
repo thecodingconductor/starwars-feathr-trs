@@ -1,3 +1,4 @@
+// never completed light/dark theme mode. 
 export interface Theme {
   background: string;
   text: string;
