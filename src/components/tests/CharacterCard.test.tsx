@@ -23,9 +23,9 @@ describe("EntityCard", () => {
     expect(img).toHaveAttribute("alt", "Luke Skywalker");
   });
 
-  it("uses fallback image if image is not provided", () => {
-    render(<EntityCard entity={baseEntity} />);
-    const img = screen.getByRole("img", { name: /luke skywalker/i });
-    expect(img).toHaveAttribute("src", "/fallback.jpg");
-  });
+ it("does not render an image if image is not provided", () => {
+  render(<EntityCard entity={baseEntity} />);
+  const img = screen.queryByRole("img", { name: /luke skywalker/i });
+  expect(img).not.toBeInTheDocument();
+});
 });

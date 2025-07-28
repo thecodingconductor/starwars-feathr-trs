@@ -92,6 +92,6 @@ describe("extractRelatedPersonData", () => {
 
     const result = await extractRelatedPersonData(person);
 
-    expect(result.species).toEqual([{ name: "Human", id: "1" }]);
+    expect(result.species).toEqual([{ name: "Human", id: "1", url: "https://swapi.info/api/species/1/" }]);
   });
 });
