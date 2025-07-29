@@ -14,6 +14,8 @@ export const ROUTES = {
 
 export type RouteKey = keyof typeof ROUTES;
 
+
+// Extract only the static route paths (i.e. values that are plain strings) from your ROUTES object — and discard any that are functions.
 type LeafRoutes = {
   [K in RouteKey]: (typeof ROUTES)[K] extends string
     ? (typeof ROUTES)[K]

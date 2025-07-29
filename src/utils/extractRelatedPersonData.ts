@@ -17,6 +17,7 @@ type SWAPIEntity = {
   name?: string;
 };
 
+// The extract Related ENTITY Data functions are needed to display info / and names of related data, like the Pilots for Starships, or the Planets, etc. API only returns a url. 
 const fetchRelatedItem = async (
   url: string,
   fallbackName = "Unknown",
